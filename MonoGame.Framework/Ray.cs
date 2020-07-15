@@ -4,6 +4,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Numerics;
 using System.Runtime.Serialization;
 
 namespace Microsoft.Xna.Framework
@@ -171,14 +172,14 @@ namespace Microsoft.Xna.Framework
 
         public void Intersects(ref Plane plane, out float? result)
         {
-            var den = Vector3.Dot(Direction, plane.Normal);
+            var den = System.Numerics.Vector3.Dot(Direction.FromVector3(), plane.Normal);
             if (Math.Abs(den) < 0.00001f)
             {
                 result = null;
                 return;
             }
 
-            result = (-plane.D - Vector3.Dot(plane.Normal, Position)) / den;
+            result = (-plane.D - System.Numerics.Vector3.Dot(plane.Normal, Position.FromVector3())) / den;
 
             if (result < 0.0f)
             {

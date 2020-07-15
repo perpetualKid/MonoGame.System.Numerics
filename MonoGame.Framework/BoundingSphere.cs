@@ -527,9 +527,7 @@ namespace Microsoft.Xna.Framework
         /// <param name="result">Type of intersection as an output parameter.</param>
         public void Intersects(ref Plane plane, out PlaneIntersectionType result)
         {
-            var distance = default(float);
-            // TODO: we might want to inline this for performance reasons
-            Vector3.Dot(ref plane.Normal, ref this.Center, out distance);
+            var distance = System.Numerics.Vector3.Dot(plane.Normal, Center.FromVector3());
             distance += plane.D;
             if (distance > this.Radius)
                 result = PlaneIntersectionType.Front;

@@ -3,6 +3,7 @@
 // file 'LICENSE.txt', which is part of this source code package.
 
 using System;
+using System.Numerics;
 
 namespace Microsoft.Xna.Framework.Content
 {
@@ -14,7 +15,7 @@ namespace Microsoft.Xna.Framework.Content
 
         protected internal override Plane Read(ContentReader input, Plane existingInstance)
         {
-            existingInstance.Normal = input.ReadVector3();
+            existingInstance.Normal = input.ReadSystemVector3();
             existingInstance.D = input.ReadSingle();
             return existingInstance;
         }

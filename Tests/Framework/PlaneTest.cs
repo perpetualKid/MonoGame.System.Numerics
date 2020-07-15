@@ -1,11 +1,6 @@
 ﻿using System.Numerics;
 
-using Microsoft.Xna.Framework;
 using NUnit.Framework;
-
-using Plane = Microsoft.Xna.Framework.Plane;
-using Quaternion = Microsoft.Xna.Framework.Quaternion;
-using Vector3 = Microsoft.Xna.Framework.Vector3;
 
 namespace MonoGame.Tests.Framework
 {
@@ -18,7 +13,7 @@ namespace MonoGame.Tests.Framework
             var plane = Plane.Normalize(new Plane(new Vector3(0, 1, 1), 2.5f));
 
             // Our matrix.
-            var matrix = Matrix4x4.CreateRotationX(MathHelper.PiOver2);
+            var matrix = Matrix4x4.CreateRotationX(Microsoft.Xna.Framework.MathHelper.PiOver2);
 
             // Test transform.
             var expectedResult = new Plane(new Vector3(0, -0.7071068f, 0.7071067f), 1.767767f);
@@ -33,13 +28,12 @@ namespace MonoGame.Tests.Framework
             var originalPlane = plane;
 
             // Our matrix.
-            var matrix = Matrix4x4.CreateRotationX(MathHelper.PiOver2);
+            var matrix = Matrix4x4.CreateRotationX(Microsoft.Xna.Framework.MathHelper.PiOver2);
             var originalMatrix = matrix;
 
             // Test transform.
             Plane result;
-            Matrix transformMatrix = matrix.ToMatrix();
-            Plane.Transform(ref plane, ref matrix, out result);
+            result = Plane.Transform(plane, matrix);
 
             var expectedResult = new Plane(new Vector3(0.7273929f, -0.3636965f, 0.5819144f), 1.818482f);
             Assert.That(result, Is.EqualTo(expectedResult).Using(PlaneComparer.Epsilon));
@@ -55,7 +49,7 @@ namespace MonoGame.Tests.Framework
             var plane = Plane.Normalize(new Plane(new Vector3(0, 1, 1), 2.5f));
 
             // Our quaternion.
-            var quaternion = Quaternion.CreateFromAxisAngle(Vector3.UnitX, MathHelper.PiOver2);
+            var quaternion = Quaternion.CreateFromAxisAngle(Vector3.UnitX, Microsoft.Xna.Framework.MathHelper.PiOver2);
 
             // Test transform.
             var expectedResult = new Plane(new Vector3(0, -0.7071068f, 0.7071067f), 1.767767f);
@@ -70,12 +64,11 @@ namespace MonoGame.Tests.Framework
             var originalPlane = plane;
 
             // Our quaternion.
-            var quaternion = Quaternion.CreateFromAxisAngle(Vector3.UnitX, MathHelper.PiOver2);
+            var quaternion = Quaternion.CreateFromAxisAngle(Vector3.UnitX, Microsoft.Xna.Framework.MathHelper.PiOver2);
             var originalQuaternion = quaternion;
 
             // Test transform.
-            Plane result;
-            Plane.Transform(ref plane, ref quaternion, out result);
+            Plane result = Plane.Transform(plane, quaternion);
 
             var expectedResult = new Plane(new Vector3(0.7273929f, -0.3636965f, 0.5819144f), 1.818482f);
             Assert.That(result, Is.EqualTo(expectedResult).Using(PlaneComparer.Epsilon));
@@ -83,21 +76,5 @@ namespace MonoGame.Tests.Framework
             Assert.That(plane, Is.EqualTo(originalPlane));
             Assert.That(quaternion, Is.EqualTo(originalQuaternion));
         }
-
-#if !XNA
-        [Test]
-        public void Deconstruct()
-        {
-            Plane plane = new Plane(new Vector3(255, 255, 255), float.MaxValue);
-
-            Vector3 normal;
-            float d;
-
-            plane.Deconstruct(out normal, out d);
-
-            Assert.AreEqual(normal, plane.Normal);
-            Assert.AreEqual(d, plane.D);
-        }
-#endif
     }
 }

@@ -263,6 +263,14 @@ namespace Microsoft.Xna.Framework.Content
             result.Z = ReadSingle();
             return result;
         }
+        public System.Numerics.Vector3 ReadSystemVector3()
+        {
+            System.Numerics.Vector3 result = new System.Numerics.Vector3();
+            result.X = ReadSingle();
+            result.Y = ReadSingle();
+            result.Z = ReadSingle();
+            return result;
+        }
 
         public Vector4 ReadVector4()
         {

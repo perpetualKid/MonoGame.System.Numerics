@@ -1381,8 +1381,7 @@ namespace Microsoft.Xna.Framework
         /// <param name="result">The reflection <see cref="Matrix"/> as an output parameter.</param>
         public static void CreateReflection(ref Plane value, out Matrix result)
         {
-            Plane plane;
-            Plane.Normalize(ref value, out plane);
+            Plane plane = Plane.Normalize(value);
             float x = plane.Normal.X;
             float y = plane.Normal.Y;
             float z = plane.Normal.Z;

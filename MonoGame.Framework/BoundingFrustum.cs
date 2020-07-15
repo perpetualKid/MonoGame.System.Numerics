@@ -102,24 +102,24 @@ namespace Microsoft.Xna.Framework
 
         #endregion
 
-        #region Internal Properties
+        //#region Internal Properties
 
-        internal string DebugDisplayString
-        {
-            get
-            {
-                return string.Concat(
-                    "Near( ", this._planes[0].DebugDisplayString, " )  \r\n",
-                    "Far( ", this._planes[1].DebugDisplayString, " )  \r\n",
-                    "Left( ", this._planes[2].DebugDisplayString, " )  \r\n",
-                    "Right( ", this._planes[3].DebugDisplayString, " )  \r\n",
-                    "Top( ", this._planes[4].DebugDisplayString, " )  \r\n",
-                    "Bottom( ", this._planes[5].DebugDisplayString, " )  "
-                    );
-            }
-        }
+        //internal string DebugDisplayString
+        //{
+        //    get
+        //    {
+        //        return string.Concat(
+        //            "Near( ", this._planes[0].DebugDisplayString, " )  \r\n",
+        //            "Far( ", this._planes[1].DebugDisplayString, " )  \r\n",
+        //            "Left( ", this._planes[2].DebugDisplayString, " )  \r\n",
+        //            "Right( ", this._planes[3].DebugDisplayString, " )  \r\n",
+        //            "Top( ", this._planes[4].DebugDisplayString, " )  \r\n",
+        //            "Bottom( ", this._planes[5].DebugDisplayString, " )  "
+        //            );
+        //    }
+        //}
 
-        #endregion
+        //#endregion
 
         #region Constructors
 
@@ -297,7 +297,7 @@ namespace Microsoft.Xna.Framework
             for (var i = 0; i < PlaneCount; ++i)
             {
                 // TODO: we might want to inline this for performance reasons
-                if (PlaneHelper.ClassifyPoint(ref point, ref this._planes[i]) > 0)
+                if (_planes[i].ClassifyPoint(point) > 0)
                 {   
                     result = ContainmentType.Disjoint;
                     return;
@@ -435,9 +435,9 @@ namespace Microsoft.Xna.Framework
         /// <param name="result">A plane intersection type as an output parameter.</param>
         public void Intersects(ref Plane plane, out PlaneIntersectionType result)
         {
-            result = plane.Intersects(ref _corners[0]);
+            result = plane.Intersects(_corners[0].FromVector3());
             for (int i = 1; i < _corners.Length; i++)
-                if (plane.Intersects(ref _corners[i]) != result)
+                if (plane.Intersects(_corners[i].FromVector3()) != result)
                     result = PlaneIntersectionType.Intersecting;
         }
         
@@ -536,27 +536,24 @@ namespace Microsoft.Xna.Framework
             //
             // Note: N refers to the normal, d refers to the displacement. '.' means dot product. '*' means cross product
             
-            Vector3 v1, v2, v3;
-            Vector3 cross;
+            System.Numerics.Vector3 v1, v2, v3;
+            System.Numerics.Vector3 cross  = System.Numerics.Vector3.Cross(b.Normal, c.Normal);
             
-            Vector3.Cross(ref b.Normal, ref c.Normal, out cross);
-            
-            float f;
-            Vector3.Dot(ref a.Normal, ref cross, out f);
+            float f = System.Numerics.Vector3.Dot(a.Normal, cross);
             f *= -1.0f;
             
-            Vector3.Cross(ref b.Normal, ref c.Normal, out cross);
-            Vector3.Multiply(ref cross, a.D, out v1);
+            cross = System.Numerics.Vector3.Cross(b.Normal, c.Normal);
+            v1= System.Numerics.Vector3.Multiply(cross, a.D);
             //v1 = (a.D * (Vector3.Cross(b.Normal, c.Normal)));
             
             
-            Vector3.Cross(ref c.Normal, ref a.Normal, out cross);
-            Vector3.Multiply(ref cross, b.D, out v2);
+            cross = System.Numerics.Vector3.Cross(c.Normal, a.Normal);
+            v2 = System.Numerics.Vector3.Multiply(cross, b.D);
             //v2 = (b.D * (Vector3.Cross(c.Normal, a.Normal)));
-            
-            
-            Vector3.Cross(ref a.Normal, ref b.Normal, out cross);
-            Vector3.Multiply(ref cross, c.D, out v3);
+
+
+            cross = System.Numerics.Vector3.Cross(a.Normal, b.Normal);
+            v3 = System.Numerics.Vector3.Multiply(cross, c.D);
             //v3 = (c.D * (Vector3.Cross(a.Normal, b.Normal)));
             
             result.X = (v1.X + v2.X + v3.X) / f;
