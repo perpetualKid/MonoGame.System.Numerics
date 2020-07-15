@@ -118,12 +118,12 @@ namespace MonoGame.Tests.Framework
         [Test]
         public void Normalize()
         {
-            var vector1 = new Vector4(1, 2, 3, 4);
-            vector1.Normalize();
-            var expected = new Vector4(0.1825742f,0.3651484f,0.5477225f,0.7302967f);
+            var vector1 = new System.Numerics.Vector4(1, 2, 3, 4);
+            vector1 = System.Numerics.Vector4.Normalize(vector1);
+            var expected = new System.Numerics.Vector4(0.1825742f,0.3651484f,0.5477225f,0.7302967f);
             Assert.That(expected, Is.EqualTo(vector1).Using(Vector4Comparer.Epsilon));
-            var vector2 = new Vector4(1, 2, 3, 4);
-            var result = Vector4.Normalize(vector2);
+            var vector2 = new System.Numerics.Vector4(1, 2, 3, 4);
+            var result = System.Numerics.Vector4.Normalize(vector2);
             Assert.That(expected, Is.EqualTo(result).Using(Vector4Comparer.Epsilon));
         }
 

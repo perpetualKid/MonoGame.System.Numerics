@@ -6,7 +6,6 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Numerics;
 
-using Quaternion = Microsoft.Xna.Framework.Quaternion;
 using Vector3 = Microsoft.Xna.Framework.Vector3;
 
 namespace MonoGame.Tests.Framework
@@ -61,28 +60,20 @@ namespace MonoGame.Tests.Framework
         {
             // STANDART OVERLOADS TEST
 
-            var expectedResult1 = new Vector3(51, 58, 65);
-            var expectedResult2 = new Vector3(33, -14, -1);
+            var expectedResult1 = new System.Numerics.Vector3(51, 58, 65);
+            var expectedResult2 = new System.Numerics.Vector3(33, -14, -1);
 
-            var v1 = new Vector3(1, 2, 3);
+            var v1 = new System.Numerics.Vector3(1, 2, 3);
             var m1 = new Matrix4x4(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
 
-            var v2 = new Vector3(1, 2, 3);
-            var q1 = new Quaternion(2, 3, 4, 5);
+            var v2 = new System.Numerics.Vector3(1, 2, 3);
+            var q1 = new System.Numerics.Quaternion(2, 3, 4, 5);
 
             Vector3 result1;
             Vector3 result2;
             Matrix transformMatrix = m1.ToMatrix();
-            Assert.That(expectedResult1, Is.EqualTo(Vector3.Transform(v1, transformMatrix)).Using(Vector3Comparer.Epsilon));
-            Assert.That(expectedResult2, Is.EqualTo(Vector3.Transform(v2, q1)).Using(Vector3Comparer.Epsilon));
-
-            // OUTPUT OVERLOADS TEST
-
-            Vector3.Transform(ref v1, ref transformMatrix, out result1);
-            Vector3.Transform(ref v2, ref q1, out result2);
-
-            Assert.That(expectedResult1, Is.EqualTo(result1).Using(Vector3Comparer.Epsilon));
-            Assert.That(expectedResult2, Is.EqualTo(result2).Using(Vector3Comparer.Epsilon));
+            Assert.That(expectedResult1, Is.EqualTo(System.Numerics.Vector3.Transform(v1, m1)).Using(Vector3Comparer.Epsilon));
+            Assert.That(expectedResult2, Is.EqualTo(System.Numerics.Vector3.Transform(v2, q1)).Using(Vector3Comparer.Epsilon));
         }
 
         [Test]

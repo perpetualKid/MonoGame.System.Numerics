@@ -660,83 +660,83 @@ namespace Microsoft.Xna.Framework
 		    result.M44 = 1;
         }
 
-        /// <summary>
-        /// Creates a new rotation <see cref="Matrix"/> from a <see cref="Quaternion"/>.
-        /// </summary>
-        /// <param name="quaternion"><see cref="Quaternion"/> of rotation moment.</param>
-        /// <returns>The rotation <see cref="Matrix"/>.</returns>
-        public static Matrix CreateFromQuaternion(Quaternion quaternion)
-        {
-            Matrix result;
-            CreateFromQuaternion(ref quaternion, out result);
-            return result;
-        }
+  //      /// <summary>
+  //      /// Creates a new rotation <see cref="Matrix"/> from a <see cref="Quaternion"/>.
+  //      /// </summary>
+  //      /// <param name="quaternion"><see cref="Quaternion"/> of rotation moment.</param>
+  //      /// <returns>The rotation <see cref="Matrix"/>.</returns>
+  //      public static Matrix CreateFromQuaternion(Quaternion quaternion)
+  //      {
+  //          Matrix result;
+  //          CreateFromQuaternion(ref quaternion, out result);
+  //          return result;
+  //      }
 
-        /// <summary>
-        /// Creates a new rotation <see cref="Matrix"/> from a <see cref="Quaternion"/>.
-        /// </summary>
-        /// <param name="quaternion"><see cref="Quaternion"/> of rotation moment.</param>
-        /// <param name="result">The rotation <see cref="Matrix"/> as an output parameter.</param>
-        public static void CreateFromQuaternion(ref Quaternion quaternion, out Matrix result)
-        {
-            float num9 = quaternion.X * quaternion.X;
-		    float num8 = quaternion.Y * quaternion.Y;
-		    float num7 = quaternion.Z * quaternion.Z;
-		    float num6 = quaternion.X * quaternion.Y;
-		    float num5 = quaternion.Z * quaternion.W;
-		    float num4 = quaternion.Z * quaternion.X;
-		    float num3 = quaternion.Y * quaternion.W;
-		    float num2 = quaternion.Y * quaternion.Z;
-		    float num = quaternion.X * quaternion.W;
-		    result.M11 = 1f - (2f * (num8 + num7));
-		    result.M12 = 2f * (num6 + num5);
-		    result.M13 = 2f * (num4 - num3);
-		    result.M14 = 0f;
-		    result.M21 = 2f * (num6 - num5);
-		    result.M22 = 1f - (2f * (num7 + num9));
-		    result.M23 = 2f * (num2 + num);
-		    result.M24 = 0f;
-		    result.M31 = 2f * (num4 + num3);
-		    result.M32 = 2f * (num2 - num);
-		    result.M33 = 1f - (2f * (num8 + num9));
-		    result.M34 = 0f;
-		    result.M41 = 0f;
-		    result.M42 = 0f;
-		    result.M43 = 0f;
-		    result.M44 = 1f;
-        }
+  //      /// <summary>
+  //      /// Creates a new rotation <see cref="Matrix"/> from a <see cref="Quaternion"/>.
+  //      /// </summary>
+  //      /// <param name="quaternion"><see cref="Quaternion"/> of rotation moment.</param>
+  //      /// <param name="result">The rotation <see cref="Matrix"/> as an output parameter.</param>
+  //      public static void CreateFromQuaternion(ref Quaternion quaternion, out Matrix result)
+  //      {
+  //          float num9 = quaternion.X * quaternion.X;
+		//    float num8 = quaternion.Y * quaternion.Y;
+		//    float num7 = quaternion.Z * quaternion.Z;
+		//    float num6 = quaternion.X * quaternion.Y;
+		//    float num5 = quaternion.Z * quaternion.W;
+		//    float num4 = quaternion.Z * quaternion.X;
+		//    float num3 = quaternion.Y * quaternion.W;
+		//    float num2 = quaternion.Y * quaternion.Z;
+		//    float num = quaternion.X * quaternion.W;
+		//    result.M11 = 1f - (2f * (num8 + num7));
+		//    result.M12 = 2f * (num6 + num5);
+		//    result.M13 = 2f * (num4 - num3);
+		//    result.M14 = 0f;
+		//    result.M21 = 2f * (num6 - num5);
+		//    result.M22 = 1f - (2f * (num7 + num9));
+		//    result.M23 = 2f * (num2 + num);
+		//    result.M24 = 0f;
+		//    result.M31 = 2f * (num4 + num3);
+		//    result.M32 = 2f * (num2 - num);
+		//    result.M33 = 1f - (2f * (num8 + num9));
+		//    result.M34 = 0f;
+		//    result.M41 = 0f;
+		//    result.M42 = 0f;
+		//    result.M43 = 0f;
+		//    result.M44 = 1f;
+  //      }
 
-        /// <summary>
-        /// Creates a new rotation <see cref="Matrix"/> from the specified yaw, pitch and roll values.
-        /// </summary>
-        /// <param name="yaw">The yaw rotation value in radians.</param>
-        /// <param name="pitch">The pitch rotation value in radians.</param>
-        /// <param name="roll">The roll rotation value in radians.</param>
-        /// <returns>The rotation <see cref="Matrix"/>.</returns>
-        /// <remarks>For more information about yaw, pitch and roll visit http://en.wikipedia.org/wiki/Euler_angles.
-        /// </remarks>
-		public static Matrix CreateFromYawPitchRoll(float yaw, float pitch, float roll)
-		{
-			Matrix matrix;
-            CreateFromYawPitchRoll(yaw, pitch, roll, out matrix);
-		    return matrix;
-		}
+  //      /// <summary>
+  //      /// Creates a new rotation <see cref="Matrix"/> from the specified yaw, pitch and roll values.
+  //      /// </summary>
+  //      /// <param name="yaw">The yaw rotation value in radians.</param>
+  //      /// <param name="pitch">The pitch rotation value in radians.</param>
+  //      /// <param name="roll">The roll rotation value in radians.</param>
+  //      /// <returns>The rotation <see cref="Matrix"/>.</returns>
+  //      /// <remarks>For more information about yaw, pitch and roll visit http://en.wikipedia.org/wiki/Euler_angles.
+  //      /// </remarks>
+		//public static Matrix CreateFromYawPitchRoll(float yaw, float pitch, float roll)
+		//{
+		//	Matrix matrix;
+  //          CreateFromYawPitchRoll(yaw, pitch, roll, out matrix);
+		//    return matrix;
+		//}
 
-        /// <summary>
-        /// Creates a new rotation <see cref="Matrix"/> from the specified yaw, pitch and roll values.
-        /// </summary>
-        /// <param name="yaw">The yaw rotation value in radians.</param>
-        /// <param name="pitch">The pitch rotation value in radians.</param>
-        /// <param name="roll">The roll rotation value in radians.</param>
-        /// <param name="result">The rotation <see cref="Matrix"/> as an output parameter.</param>
-        /// <remarks>For more information about yaw, pitch and roll visit http://en.wikipedia.org/wiki/Euler_angles.
-        /// </remarks>
-		public static void CreateFromYawPitchRoll(float yaw, float pitch, float roll, out Matrix result)
-		{
-			Quaternion quaternion;
-		    Quaternion.CreateFromYawPitchRoll(yaw, pitch, roll, out quaternion);
-		    CreateFromQuaternion(ref quaternion, out result);
-		}
+  //      /// <summary>
+  //      /// Creates a new rotation <see cref="Matrix"/> from the specified yaw, pitch and roll values.
+  //      /// </summary>
+  //      /// <param name="yaw">The yaw rotation value in radians.</param>
+  //      /// <param name="pitch">The pitch rotation value in radians.</param>
+  //      /// <param name="roll">The roll rotation value in radians.</param>
+  //      /// <param name="result">The rotation <see cref="Matrix"/> as an output parameter.</param>
+  //      /// <remarks>For more information about yaw, pitch and roll visit http://en.wikipedia.org/wiki/Euler_angles.
+  //      /// </remarks>
+		//public static void CreateFromYawPitchRoll(float yaw, float pitch, float roll, out Matrix result)
+		//{
+		//	Quaternion quaternion;
+		//    Quaternion.CreateFromYawPitchRoll(yaw, pitch, roll, out quaternion);
+		//    CreateFromQuaternion(ref quaternion, out result);
+		//}
 
         /// <summary>
         /// Creates a new viewing <see cref="Matrix"/>.
@@ -1444,41 +1444,41 @@ namespace Microsoft.Xna.Framework
                         result.M44 = 1f;
         }
 
-        /// <summary>
-        /// Decomposes this matrix to translation, rotation and scale elements. Returns <c>true</c> if matrix can be decomposed; <c>false</c> otherwise.
-        /// </summary>
-        /// <param name="scale">Scale vector as an output parameter.</param>
-        /// <param name="rotation">Rotation quaternion as an output parameter.</param>
-        /// <param name="translation">Translation vector as an output parameter.</param>
-        /// <returns><c>true</c> if matrix can be decomposed; <c>false</c> otherwise.</returns>
-        public bool Decompose(out Vector3 scale, out Quaternion rotation, out Vector3 translation)
-        {
-            translation.X = this.M41;
-            translation.Y = this.M42;
-            translation.Z = this.M43;
+        ///// <summary>
+        ///// Decomposes this matrix to translation, rotation and scale elements. Returns <c>true</c> if matrix can be decomposed; <c>false</c> otherwise.
+        ///// </summary>
+        ///// <param name="scale">Scale vector as an output parameter.</param>
+        ///// <param name="rotation">Rotation quaternion as an output parameter.</param>
+        ///// <param name="translation">Translation vector as an output parameter.</param>
+        ///// <returns><c>true</c> if matrix can be decomposed; <c>false</c> otherwise.</returns>
+        //public bool Decompose(out Vector3 scale, out Quaternion rotation, out Vector3 translation)
+        //{
+        //    translation.X = this.M41;
+        //    translation.Y = this.M42;
+        //    translation.Z = this.M43;
 
-            float xs = (Math.Sign(M11 * M12 * M13 * M14) < 0) ? -1 : 1;
-            float ys = (Math.Sign(M21 * M22 * M23 * M24) < 0) ? -1 : 1;
-            float zs = (Math.Sign(M31 * M32 * M33 * M34) < 0) ? -1 : 1;
+        //    float xs = (Math.Sign(M11 * M12 * M13 * M14) < 0) ? -1 : 1;
+        //    float ys = (Math.Sign(M21 * M22 * M23 * M24) < 0) ? -1 : 1;
+        //    float zs = (Math.Sign(M31 * M32 * M33 * M34) < 0) ? -1 : 1;
 
-            scale.X = xs * (float)Math.Sqrt(this.M11 * this.M11 + this.M12 * this.M12 + this.M13 * this.M13);
-            scale.Y = ys * (float)Math.Sqrt(this.M21 * this.M21 + this.M22 * this.M22 + this.M23 * this.M23);
-            scale.Z = zs * (float)Math.Sqrt(this.M31 * this.M31 + this.M32 * this.M32 + this.M33 * this.M33);
+        //    scale.X = xs * (float)Math.Sqrt(this.M11 * this.M11 + this.M12 * this.M12 + this.M13 * this.M13);
+        //    scale.Y = ys * (float)Math.Sqrt(this.M21 * this.M21 + this.M22 * this.M22 + this.M23 * this.M23);
+        //    scale.Z = zs * (float)Math.Sqrt(this.M31 * this.M31 + this.M32 * this.M32 + this.M33 * this.M33);
 
-            if (scale.X == 0.0 || scale.Y == 0.0 || scale.Z == 0.0)
-            {
-                rotation = Quaternion.Identity;
-                return false;
-            }
+        //    if (scale.X == 0.0 || scale.Y == 0.0 || scale.Z == 0.0)
+        //    {
+        //        rotation = Quaternion.Identity;
+        //        return false;
+        //    }
 
-            Matrix4x4 m1 = new Matrix4x4(this.M11 / scale.X, M12 / scale.X, M13 / scale.X, 0,
-                                   this.M21 / scale.Y, M22 / scale.Y, M23 / scale.Y, 0,
-                                   this.M31 / scale.Z, M32 / scale.Z, M33 / scale.Z, 0,
-                                   0, 0, 0, 1);
+        //    Matrix4x4 m1 = new Matrix4x4(this.M11 / scale.X, M12 / scale.X, M13 / scale.X, 0,
+        //                           this.M21 / scale.Y, M22 / scale.Y, M23 / scale.Y, 0,
+        //                           this.M31 / scale.Z, M32 / scale.Z, M33 / scale.Z, 0,
+        //                           0, 0, 0, 1);
 
-            rotation = Quaternion.CreateFromRotationMatrix(m1);
-            return true;
-        }	
+        //    rotation = Quaternion.CreateFromRotationMatrix(m1);
+        //    return true;
+        //}	
 
 		/// <summary>
         /// Returns a determinant of this <see cref="Matrix"/>.

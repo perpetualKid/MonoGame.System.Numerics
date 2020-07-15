@@ -3,9 +3,7 @@
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
 
-using Quaternion = Microsoft.Xna.Framework.Quaternion;
-using Vector3 = Microsoft.Xna.Framework.Vector3;
-using Vector4 = Microsoft.Xna.Framework.Vector4;
+using Quaternion = System.Numerics.Quaternion;
 
 namespace MonoGame.Tests.Framework
 {
@@ -30,10 +28,7 @@ namespace MonoGame.Tests.Framework
             expected.Z = 3;
             expected.W = 4;
             Compare(expected, new Quaternion(1, 2, 3, 4));
-            Compare(expected, new Quaternion(new Vector3(1, 2, 3), 4));
-#if !XNA
-            Compare(expected, new Quaternion(new Vector4(1, 2, 3, 4)));
-#endif
+            Compare(expected, new Quaternion(new System.Numerics.Vector3(1, 2, 3), 4));
         }
 
         [Test]
@@ -50,8 +45,7 @@ namespace MonoGame.Tests.Framework
             Quaternion expected = new Quaternion(2, 4, 6, 8);
             Compare(expected, Quaternion.Add(q1, q2));
 
-            Quaternion result;
-            Quaternion.Add(ref q1, ref q2, out result);
+            Quaternion result = Quaternion.Add(q1, q2);
             Compare(expected, result);
         }
 
@@ -63,8 +57,7 @@ namespace MonoGame.Tests.Framework
             Quaternion expected = new Quaternion(21.5f, 6.2f, -8.7f, 13.4f);
             Compare(expected, Quaternion.Concatenate(q1, q2));
 
-            Quaternion result;
-            Quaternion.Concatenate(ref q1, ref q2, out result);
+            Quaternion result = Quaternion.Concatenate(q1, q2);
             Compare(expected, result);
         }
 
@@ -75,26 +68,18 @@ namespace MonoGame.Tests.Framework
             Quaternion expected = new Quaternion(-1, -2, -3, 4);
             Compare(expected, Quaternion.Conjugate(q));
 
-            Quaternion result;
-            Quaternion.Conjugate(ref q, out result);
+            Quaternion result = Quaternion.Conjugate(q);
             Compare(expected, result);
-
-            q.Conjugate();
-            Compare(expected, q);
         }
 
         [Test]
         public void CreateFromAxisAngle()
         {
-            Vector3 axis = new Vector3(0.5f, 1.1f, -3.8f);
+            System.Numerics.Vector3 axis = new System.Numerics.Vector3(0.5f, 1.1f, -3.8f);
             float angle = 0.25f;
             Quaternion expected = new Quaternion(0.06233737f, 0.1371422f, -0.473764f, 0.9921977f);
 
             Compare(expected, Quaternion.CreateFromAxisAngle(axis, angle));
-
-            Quaternion result;
-            Quaternion.CreateFromAxisAngle(ref axis, angle, out result);
-            Compare(expected, result);
         }
 
         [Test]
@@ -103,10 +88,6 @@ namespace MonoGame.Tests.Framework
             var matrix = Matrix4x4.CreateFromYawPitchRoll(0.15f, 1.18f, -0.22f);
             Quaternion expected = new Quaternion(0.5446088f, 0.1227905f, -0.1323988f, 0.8190203f);
             Compare(expected, Quaternion.CreateFromRotationMatrix(matrix));
-
-            Quaternion result;
-            Quaternion.CreateFromRotationMatrix(ref matrix, out result);
-            Compare(expected, result);
         }
 
         [Test]
@@ -114,10 +95,6 @@ namespace MonoGame.Tests.Framework
         {
             Quaternion expected = new Quaternion(0.5446088f, 0.1227905f, -0.1323988f, 0.8190203f);
             Compare(expected, Quaternion.CreateFromYawPitchRoll(0.15f, 1.18f, -0.22f));
-
-            Quaternion result;
-            Quaternion.CreateFromYawPitchRoll(0.15f, 1.18f, -0.22f, out result);
-            Compare(expected, result);
         }
 
         [Test]
@@ -128,8 +105,7 @@ namespace MonoGame.Tests.Framework
             Quaternion expected = new Quaternion(-0.1858319f, 0.09661285f, -0.3279344f, 0.2446305f);
             Compare(expected, Quaternion.Divide(q1, q2));
 
-            Quaternion result;
-            Quaternion.Divide(ref q1, ref q2, out result);
+            Quaternion result = Quaternion.Divide(q1, q2);
             Compare(expected, result);
         }
 
@@ -155,30 +131,8 @@ namespace MonoGame.Tests.Framework
 
             Compare(expected, Quaternion.Normalize(q));
 
-            Quaternion result;
-            Quaternion.Normalize(ref q, out result);
+            Quaternion result = Quaternion.Normalize(q);
             Compare(expected, result);
-
-
-            q.Normalize();
-            Compare(expected, q);
         }
-
-#if !XNA
-        [Test]
-        public void Deconstruct()
-        {
-            Quaternion quaternion = new Quaternion(float.MinValue, float.MaxValue, float.MinValue, float.MaxValue);
-
-            float x, y, z, w;
-
-            quaternion.Deconstruct(out x, out y, out z, out w);
-
-            Assert.AreEqual(x, quaternion.X);
-            Assert.AreEqual(y, quaternion.Y);
-            Assert.AreEqual(z, quaternion.Z);
-            Assert.AreEqual(w, quaternion.W);
-        }
-#endif
     }
 }

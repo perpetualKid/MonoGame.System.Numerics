@@ -10,10 +10,10 @@ using System.Runtime.InteropServices;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
 
-using Quaternion = Microsoft.Xna.Framework.Quaternion;
-using Vector2 = Microsoft.Xna.Framework.Vector2;
-using Vector3 = Microsoft.Xna.Framework.Vector3;
-using Vector4 = Microsoft.Xna.Framework.Vector4;
+using Quaternion = System.Numerics.Quaternion;
+using Vector2 = System.Numerics.Vector2;
+using Vector3 = System.Numerics.Vector3;
+using Vector4 = System.Numerics.Vector4;
 
 namespace MonoGame.Tests {
 
