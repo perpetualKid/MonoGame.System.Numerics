@@ -69,10 +69,14 @@ non-infringement.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+
+using Vector2 = Microsoft.Xna.Framework.Vector2;
+using Vector3 = Microsoft.Xna.Framework.Vector3;
 
 namespace MonoGame.Tests.Components
 {
@@ -151,7 +155,7 @@ namespace MonoGame.Tests.Components
 
 
 		Quad quad;
-		Matrix View, Projection;
+		Matrix4x4 View, Projection;
 
 		BasicEffect quadEffect;
 
@@ -169,8 +173,8 @@ namespace MonoGame.Tests.Components
 			base.LoadContent();
 
 			quad = new Quad(Vector3.Zero, Vector3.Backward, Vector3.Up, 1, 1);
-			View = Matrix.CreateLookAt(new Vector3(0, 0, 2), Vector3.Zero, Vector3.Up);
-			Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, 4.0f / 3.0f, 1, 500);
+			View = Matrix4x4.CreateLookAt(new System.Numerics.Vector3(0, 0, 2), System.Numerics.Vector3.Zero, new System.Numerics.Vector3(0, 1, 0));
+			Projection = Matrix4x4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, 4.0f / 3.0f, 1, 500);
 
 			texture = Game.Content.Load<Texture2D>(Paths.Texture("GlassPane"));
 			quadEffect = new BasicEffect(GraphicsDevice);
@@ -178,7 +182,7 @@ namespace MonoGame.Tests.Components
 			if (enableLighting)
 				quadEffect.EnableDefaultLighting();
 
-			quadEffect.World = Matrix.Identity;
+			quadEffect.World = Matrix4x4.Identity;
 			quadEffect.View = View;
 			quadEffect.Projection = Projection;
 			quadEffect.TextureEnabled = true;

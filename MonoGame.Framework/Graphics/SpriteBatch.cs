@@ -3,6 +3,7 @@
 // file 'LICENSE.txt', which is part of this source code package.
 
 using System;
+using System.Numerics;
 using System.Text;
 
 namespace Microsoft.Xna.Framework.Graphics
@@ -72,7 +73,7 @@ namespace Microsoft.Xna.Framework.Graphics
         /// <param name="depthStencilState">State of the depth-stencil buffer. Uses <see cref="DepthStencilState.None"/> if null.</param>
         /// <param name="rasterizerState">State of the rasterization. Uses <see cref="RasterizerState.CullCounterClockwise"/> if null.</param>
         /// <param name="effect">A custom <see cref="Effect"/> to override the default sprite effect. Uses default sprite effect if null.</param>
-        /// <param name="transformMatrix">An optional matrix used to transform the sprite geometry. Uses <see cref="Matrix.Identity"/> if null.</param>
+        /// <param name="transformMatrix">An optional matrix used to transform the sprite geometry. Uses <see cref="Matrix4x4Matrix.Identity"/> if null.</param>
         /// <exception cref="InvalidOperationException">Thrown if <see cref="Begin"/> is called next time without previous <see cref="End"/>.</exception>
         /// <remarks>This method uses optional parameters.</remarks>
         /// <remarks>The <see cref="Begin"/> Begin should be called before drawing commands, and you cannot call it again before subsequent <see cref="End"/>.</remarks>
@@ -84,7 +85,7 @@ namespace Microsoft.Xna.Framework.Graphics
              DepthStencilState depthStencilState = null,
              RasterizerState rasterizerState = null,
              Effect effect = null,
-             Matrix? transformMatrix = null
+             Matrix4x4? transformMatrix = null
         )
         {
             if (_beginCalled)
@@ -723,7 +724,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 }
             }
             
-            Matrix transformation = Matrix.Identity;
+            Matrix4x4 transformation = Matrix4x4.Identity;
             float cos = 0, sin = 0;
             if (rotation == 0)
             {
@@ -789,7 +790,8 @@ namespace Microsoft.Xna.Framework.Graphics
                     p.Y += pCurrentGlyph->BoundsInTexture.Height - spriteFont.LineSpacing;
                 p.Y += pCurrentGlyph->Cropping.Y;
 
-                Vector2.Transform(ref p, ref transformation, out p);
+                    Matrix tempTransformation = transformation.ToMatrix();
+                Vector2.Transform(ref p, ref tempTransformation, out p);
 
                 var item = _batcher.CreateBatchItem();               
                 item.Texture = spriteFont.Texture;
@@ -1005,7 +1007,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 }
             }
             
-            Matrix transformation = Matrix.Identity;
+            Matrix4x4 transformation = Matrix4x4.Identity;
             float cos = 0, sin = 0;
             if (rotation == 0)
             {
@@ -1071,8 +1073,8 @@ namespace Microsoft.Xna.Framework.Graphics
                     p.Y += pCurrentGlyph->BoundsInTexture.Height - spriteFont.LineSpacing;
                 p.Y += pCurrentGlyph->Cropping.Y;
 
-                Vector2.Transform(ref p, ref transformation, out p);
-                
+                    //                Vector2.Transform(ref p, ref transformation, out p);
+                    p = Vector2.Transform(p, transformation.ToMatrix());
                 var item = _batcher.CreateBatchItem();               
                 item.Texture = spriteFont.Texture;
                 item.SortKey = sortKey;

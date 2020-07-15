@@ -3,10 +3,14 @@
 // file 'LICENSE.txt', which is part of this source code package.
 
 using System;
+using System.Numerics;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Tests.Components;
 using NUnit.Framework;
+
+using Vector3 = Microsoft.Xna.Framework.Vector3;
 
 namespace MonoGame.Tests.Graphics
 {
@@ -25,9 +29,9 @@ namespace MonoGame.Tests.Graphics
             var effect = new BasicEffect(gd)
             {
                 VertexColorEnabled = true,
-                World = Matrix.Identity,
-                View = Matrix.Identity,
-                Projection = Matrix.Identity,
+                World = Matrix4x4.Identity,
+                View = Matrix4x4.Identity,
+                Projection = Matrix4x4.Identity,
             };
             RasterizerState rs;
             var data = new VertexPositionColor[3];

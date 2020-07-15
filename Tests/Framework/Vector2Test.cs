@@ -2,6 +2,10 @@
 using NUnit.Framework;
 using System.ComponentModel;
 using System.Globalization;
+using System.Numerics;
+
+using Quaternion = Microsoft.Xna.Framework.Quaternion;
+using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace MonoGame.Tests.Framework
 {
@@ -106,22 +110,22 @@ namespace MonoGame.Tests.Framework
             var expectedResult2 = new Vector2(-0.0168301091f, 2.30964f);
 
             var v1 = new Vector2(1, 2);
-            var m1 = new Matrix(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+            var m1 = new Matrix4x4(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
 
             var v2 = new Vector2(1.1f, 2.45f);
             var q2 = new Quaternion(0.11f, 0.22f, 0.33f, 0.55f);
 
             var q3 = new Quaternion(1, 2, 3, 4);
 
-            Assert.That(expectedResult1, Is.EqualTo(Vector2.Transform(v1, m1)).Using(Vector2Comparer.Epsilon));
+            Matrix transformMatrix = m1.ToMatrix();
+            Assert.That(expectedResult1, Is.EqualTo(Vector2.Transform(v1, transformMatrix)).Using(Vector2Comparer.Epsilon));
             Assert.That(expectedResult2, Is.EqualTo(Vector2.Transform(v2, q2)).Using(Vector2Comparer.Epsilon));
 
             // OUTPUT OVERLOADS TEST
 
             Vector2 result1;
             Vector2 result2;
-
-            Vector2.Transform(ref v1, ref m1, out result1);
+            Vector2.Transform(ref v1, ref transformMatrix, out result1);
             Vector2.Transform(ref v2, ref q2, out result2);
 
             Assert.That(expectedResult1, Is.EqualTo(result1).Using(Vector2Comparer.Epsilon));
@@ -137,7 +141,7 @@ namespace MonoGame.Tests.Framework
                     sourceList1[i] = (new Vector2(1 + i, 1 + i));
                 }
 
-                Vector2.Transform(sourceList1, 0, ref m1, desinationList1, 0, 10);
+                Vector2.Transform(sourceList1, 0, ref transformMatrix, desinationList1, 0, 10);
 
                 for (int i = 0; i < 10; i++)
                 {
@@ -154,7 +158,7 @@ namespace MonoGame.Tests.Framework
                     sourceList2[i] = (new Vector2(1 + i, 1 + i));
                 }
 
-                Vector2.Transform(sourceList2, 2, ref m1, desinationList2, 1, 3);
+                Vector2.Transform(sourceList2, 2, ref transformMatrix, desinationList2, 1, 3);
 
                 Assert.That(Vector2.Zero, Is.EqualTo(desinationList2[0]).Using(Vector2Comparer.Epsilon));
 
@@ -177,7 +181,7 @@ namespace MonoGame.Tests.Framework
                     sourceList3[i] = (new Vector2(1 + i, 1 + i));
                 }
 
-                Vector2.Transform(sourceList3, ref m1, desinationList3);
+                Vector2.Transform(sourceList3, ref transformMatrix, desinationList3);
 
                 for (int i = 0; i < 10; i++)
                 {

@@ -1,5 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Numerics;
+
+using Microsoft.Xna.Framework;
 using NUnit.Framework;
+
+using Plane = Microsoft.Xna.Framework.Plane;
+using Quaternion = Microsoft.Xna.Framework.Quaternion;
+using Vector3 = Microsoft.Xna.Framework.Vector3;
 
 namespace MonoGame.Tests.Framework
 {
@@ -12,7 +18,7 @@ namespace MonoGame.Tests.Framework
             var plane = Plane.Normalize(new Plane(new Vector3(0, 1, 1), 2.5f));
 
             // Our matrix.
-            var matrix = Matrix.CreateRotationX(MathHelper.PiOver2);
+            var matrix = Matrix4x4.CreateRotationX(MathHelper.PiOver2);
 
             // Test transform.
             var expectedResult = new Plane(new Vector3(0, -0.7071068f, 0.7071067f), 1.767767f);
@@ -27,11 +33,12 @@ namespace MonoGame.Tests.Framework
             var originalPlane = plane;
 
             // Our matrix.
-            var matrix = Matrix.CreateRotationX(MathHelper.PiOver2);
+            var matrix = Matrix4x4.CreateRotationX(MathHelper.PiOver2);
             var originalMatrix = matrix;
 
             // Test transform.
             Plane result;
+            Matrix transformMatrix = matrix.ToMatrix();
             Plane.Transform(ref plane, ref matrix, out result);
 
             var expectedResult = new Plane(new Vector3(0.7273929f, -0.3636965f, 0.5819144f), 1.818482f);

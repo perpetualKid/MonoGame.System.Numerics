@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Numerics;
 using System.Runtime.Serialization;
 
 namespace Microsoft.Xna.Framework
@@ -573,26 +574,26 @@ namespace Microsoft.Xna.Framework
         #region Transform
 
         /// <summary>
-        /// Creates a new <see cref="BoundingSphere"/> that contains a transformation of translation and scale from this sphere by the specified <see cref="Matrix"/>.
+        /// Creates a new <see cref="BoundingSphere"/> that contains a transformation of translation and scale from this sphere by the specified <see cref="Matrix4x4"/>.
         /// </summary>
-        /// <param name="matrix">The transformation <see cref="Matrix"/>.</param>
+        /// <param name="matrix">The transformation <see cref="Matrix4x4"/>.</param>
         /// <returns>Transformed <see cref="BoundingSphere"/>.</returns>
-        public BoundingSphere Transform(Matrix matrix)
+        public BoundingSphere Transform(Matrix4x4 matrix)
         {
             BoundingSphere sphere = new BoundingSphere();
-            sphere.Center = Vector3.Transform(this.Center, matrix);
+            sphere.Center = Vector3.Transform(this.Center, matrix.ToMatrix());
             sphere.Radius = this.Radius * ((float)Math.Sqrt((double)Math.Max(((matrix.M11 * matrix.M11) + (matrix.M12 * matrix.M12)) + (matrix.M13 * matrix.M13), Math.Max(((matrix.M21 * matrix.M21) + (matrix.M22 * matrix.M22)) + (matrix.M23 * matrix.M23), ((matrix.M31 * matrix.M31) + (matrix.M32 * matrix.M32)) + (matrix.M33 * matrix.M33)))));
             return sphere;
         }
 
         /// <summary>
-        /// Creates a new <see cref="BoundingSphere"/> that contains a transformation of translation and scale from this sphere by the specified <see cref="Matrix"/>.
+        /// Creates a new <see cref="BoundingSphere"/> that contains a transformation of translation and scale from this sphere by the specified <see cref="Matrix4x4"/>.
         /// </summary>
-        /// <param name="matrix">The transformation <see cref="Matrix"/>.</param>
+        /// <param name="matrix">The transformation <see cref="Matrix4x4"/>.</param>
         /// <param name="result">Transformed <see cref="BoundingSphere"/> as an output parameter.</param>
-        public void Transform(ref Matrix matrix, out BoundingSphere result)
+        public void Transform(ref Matrix4x4 matrix, out BoundingSphere result)
         {
-            result.Center = Vector3.Transform(this.Center, matrix);
+            result.Center = Vector3.Transform(this.Center, matrix.ToMatrix());
             result.Radius = this.Radius * ((float)Math.Sqrt((double)Math.Max(((matrix.M11 * matrix.M11) + (matrix.M12 * matrix.M12)) + (matrix.M13 * matrix.M13), Math.Max(((matrix.M21 * matrix.M21) + (matrix.M22 * matrix.M22)) + (matrix.M23 * matrix.M23), ((matrix.M31 * matrix.M31) + (matrix.M32 * matrix.M32)) + (matrix.M33 * matrix.M33)))));
         }
 

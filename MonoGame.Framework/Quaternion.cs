@@ -4,6 +4,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Numerics;
 using System.Runtime.Serialization;
 
 namespace Microsoft.Xna.Framework
@@ -294,11 +295,11 @@ namespace Microsoft.Xna.Framework
         #region CreateFromRotationMatrix
 
         /// <summary>
-        /// Creates a new <see cref="Quaternion"/> from the specified <see cref="Matrix"/>.
+        /// Creates a new <see cref="Quaternion"/> from the specified <see cref="Matrix4x4"/>.
         /// </summary>
         /// <param name="matrix">The rotation matrix.</param>
         /// <returns>A quaternion composed from the rotation part of the matrix.</returns>
-        public static Quaternion CreateFromRotationMatrix(Matrix matrix)
+        public static Quaternion CreateFromRotationMatrix(Matrix4x4 matrix)
         {
             Quaternion quaternion;
             float sqrt;
@@ -353,11 +354,11 @@ namespace Microsoft.Xna.Framework
         }
 
         /// <summary>
-        /// Creates a new <see cref="Quaternion"/> from the specified <see cref="Matrix"/>.
+        /// Creates a new <see cref="Quaternion"/> from the specified <see cref="Matrix4x4"/>.
         /// </summary>
         /// <param name="matrix">The rotation matrix.</param>
         /// <param name="result">A quaternion composed from the rotation part of the matrix as an output parameter.</param>
-        public static void CreateFromRotationMatrix(ref Matrix matrix, out Quaternion result)
+        public static void CreateFromRotationMatrix(ref Matrix4x4 matrix, out Quaternion result)
         {
             float sqrt;
             float half;

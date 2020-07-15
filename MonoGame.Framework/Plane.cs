@@ -4,6 +4,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Numerics;
 using System.Runtime.Serialization;
 
 namespace Microsoft.Xna.Framework
@@ -136,7 +137,7 @@ namespace Microsoft.Xna.Framework
         /// <param name="plane">The normalized plane to transform.</param>
         /// <param name="matrix">The transformation matrix.</param>
         /// <returns>The transformed plane.</returns>
-        public static Plane Transform(Plane plane, Matrix matrix)
+        public static Plane Transform(Plane plane, Matrix4x4 matrix)
         {
             Plane result;
             Transform(ref plane, ref matrix, out result);
@@ -149,19 +150,19 @@ namespace Microsoft.Xna.Framework
         /// <param name="plane">The normalized plane to transform.</param>
         /// <param name="matrix">The transformation matrix.</param>
         /// <param name="result">The transformed plane.</param>
-        public static void Transform(ref Plane plane, ref Matrix matrix, out Plane result)
+        public static void Transform(ref Plane plane, ref Matrix4x4 matrix, out Plane result)
         {
             // See "Transforming Normals" in http://www.glprogramming.com/red/appendixf.html
             // for an explanation of how this works.
 
-            Matrix transformedMatrix;
-            Matrix.Invert(ref matrix, out transformedMatrix);
-            Matrix.Transpose(ref transformedMatrix, out transformedMatrix);
+            Matrix4x4 transformedMatrix;
+            Matrix4x4.Invert(matrix, out transformedMatrix);
+            transformedMatrix = Matrix4x4.Transpose(transformedMatrix);
 
             var vector = new Vector4(plane.Normal, plane.D);
-
+            Matrix tempMatrix = transformedMatrix.ToMatrix();
             Vector4 transformedVector;
-            Vector4.Transform(ref vector, ref transformedMatrix, out transformedVector);
+            Vector4.Transform(ref vector, ref tempMatrix, out transformedVector);
 
             result = new Plane(transformedVector);
         }

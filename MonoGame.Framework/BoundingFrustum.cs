@@ -4,6 +4,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Numerics;
 
 namespace Microsoft.Xna.Framework
 {
@@ -15,7 +16,7 @@ namespace Microsoft.Xna.Framework
     {
         #region Private Fields
 
-        private Matrix _matrix;
+        private Matrix4x4 _matrix;
         private readonly Vector3[] _corners = new Vector3[CornerCount];
         private readonly Plane[] _planes = new Plane[PlaneCount];
 
@@ -40,7 +41,7 @@ namespace Microsoft.Xna.Framework
         /// <summary>
         /// Gets or sets the <see cref="Matrix"/> of the frustum.
         /// </summary>
-        public Matrix Matrix
+        public Matrix4x4 Matrix
         {
             get { return this._matrix; }
             set
@@ -126,7 +127,7 @@ namespace Microsoft.Xna.Framework
         /// Constructs the frustum by extracting the view planes from a matrix.
         /// </summary>
         /// <param name="value">Combined matrix which usually is (View * Projection).</param>
-        public BoundingFrustum(Matrix value)
+        public BoundingFrustum(Matrix4x4 value)
         {
             this._matrix = value;
             this.CreatePlanes();

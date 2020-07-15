@@ -4,6 +4,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Numerics;
 using System.Runtime.Serialization;
 
 namespace Microsoft.Xna.Framework
@@ -1471,7 +1472,7 @@ namespace Microsoft.Xna.Framework
                 return false;
             }
 
-            Matrix m1 = new Matrix(this.M11 / scale.X, M12 / scale.X, M13 / scale.X, 0,
+            Matrix4x4 m1 = new Matrix4x4(this.M11 / scale.X, M12 / scale.X, M13 / scale.X, 0,
                                    this.M21 / scale.Y, M22 / scale.Y, M23 / scale.Y, 0,
                                    this.M31 / scale.Z, M32 / scale.Z, M33 / scale.Z, 0,
                                    0, 0, 0, 1);

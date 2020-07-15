@@ -5,6 +5,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Numerics;
+
 using MonoGame.Utilities;
 
 namespace Microsoft.Xna.Framework.Content
@@ -113,9 +115,9 @@ namespace Microsoft.Xna.Framework.Content
             return default(T);
         }
 
-        public Matrix ReadMatrix()
+        public Matrix4x4 ReadMatrix()
         {
-            Matrix result = new Matrix();
+            Matrix4x4 result = new Matrix4x4();
             result.M11 = ReadSingle();
             result.M12 = ReadSingle();
             result.M13 = ReadSingle();

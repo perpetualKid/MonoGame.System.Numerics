@@ -2,11 +2,13 @@
 // This file is subject to the terms and conditions defined in
 // file 'LICENSE.txt', which is part of this source code package.
 
+using System.Numerics;
+
 namespace Microsoft.Xna.Framework.Content
 {
-    class MatrixReader : ContentTypeReader<Matrix>
+    class MatrixReader : ContentTypeReader<Matrix4x4>
     {
-        protected internal override Matrix Read(ContentReader input, Matrix existingInstance)
+        protected internal override Matrix4x4 Read(ContentReader input, Matrix4x4 existingInstance)
         {
             var m11 = input.ReadSingle();
             var m12 = input.ReadSingle();
@@ -24,7 +26,7 @@ namespace Microsoft.Xna.Framework.Content
             var m42 = input.ReadSingle();
             var m43 = input.ReadSingle();
             var m44 = input.ReadSingle();
-            return new Matrix(m11, m12, m13, m14, m21, m22, m23, m24, m31, m32, m33, m34, m41, m42, m43, m44);
+            return new Matrix4x4(m11, m12, m13, m14, m21, m22, m23, m24, m31, m32, m33, m34, m41, m42, m43, m44);
         }
     }
 }

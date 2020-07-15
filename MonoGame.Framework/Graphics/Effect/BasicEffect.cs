@@ -11,6 +11,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Numerics;
 #endregion
 
 namespace Microsoft.Xna.Framework.Graphics
@@ -45,11 +46,11 @@ namespace Microsoft.Xna.Framework.Graphics
         bool textureEnabled;
         bool vertexColorEnabled;
 
-        Matrix world = Matrix.Identity;
-        Matrix view = Matrix.Identity;
-        Matrix projection = Matrix.Identity;
+        Matrix4x4 world = Matrix4x4.Identity;
+        Matrix4x4 view = Matrix4x4.Identity;
+        Matrix4x4 projection = Matrix4x4.Identity;
 
-        Matrix worldView;
+        Matrix4x4 worldView;
 
         Vector3 diffuseColor = Vector3.One;
         Vector3 emissiveColor = Vector3.Zero;
@@ -74,7 +75,7 @@ namespace Microsoft.Xna.Framework.Graphics
         /// <summary>
         /// Gets or sets the world matrix.
         /// </summary>
-        public Matrix World
+        public Matrix4x4 World
         {
             get { return world; }
             
@@ -89,7 +90,7 @@ namespace Microsoft.Xna.Framework.Graphics
         /// <summary>
         /// Gets or sets the view matrix.
         /// </summary>
-        public Matrix View
+        public Matrix4x4 View
         {
             get { return view; }
             
@@ -104,7 +105,7 @@ namespace Microsoft.Xna.Framework.Graphics
         /// <summary>
         /// Gets or sets the projection matrix.
         /// </summary>
-        public Matrix Projection
+        public Matrix4x4 Projection
         {
             get { return projection; }
             
@@ -439,7 +440,7 @@ namespace Microsoft.Xna.Framework.Graphics
         protected internal override void OnApply()
         {
             // Recompute the world+view+projection matrix or fog vector?
-            dirtyFlags = EffectHelpers.SetWorldViewProjAndFog(dirtyFlags, ref world, ref view, ref projection, ref worldView, fogEnabled, fogStart, fogEnd, worldViewProjParam, fogVectorParam);
+            dirtyFlags = EffectHelpers.SetWorldViewProjAndFog(dirtyFlags, in world, in view, in projection, ref worldView, fogEnabled, fogStart, fogEnd, worldViewProjParam, fogVectorParam);
             
             // Recompute the diffuse/emissive/alpha material color parameters?
             if ((dirtyFlags & EffectDirtyFlags.MaterialColor) != 0)
@@ -452,7 +453,7 @@ namespace Microsoft.Xna.Framework.Graphics
             if (lightingEnabled)
             {
                 // Recompute the world inverse transpose and eye position?
-                dirtyFlags = EffectHelpers.SetLightingMatrices(dirtyFlags, ref world, ref view, worldParam, worldInverseTransposeParam, eyePositionParam);
+                dirtyFlags = EffectHelpers.SetLightingMatrices(dirtyFlags, in world, in view, worldParam, worldInverseTransposeParam, eyePositionParam);
 
                 
                 // Check if we can use the only-bother-with-the-first-light shader optimization.
