@@ -2,6 +2,8 @@
 // This file is subject to the terms and conditions defined in
 // file 'LICENSE.txt', which is part of this source code package.
 
+using System.Numerics;
+
 namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
 {
     /// <summary>
@@ -46,7 +48,7 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
         /// <summary>
         /// Applies a transform directly to position and normal channels. Node transforms are unaffected.
         /// </summary>
-        internal void TransformContents(ref Matrix xform)
+        internal void TransformContents(ref Matrix4x4 xform)
         {
             // Transform positions
             for (int i = 0; i < positions.Count; i++)
@@ -55,7 +57,8 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
             // Transform all vectors too:
             // Normals are "tangent covectors", which need to be transformed using the
             // transpose of the inverse matrix!
-            Matrix inverseTranspose = Matrix.Transpose(Matrix.Invert(xform));
+            Matrix4x4.Invert(xform, out Matrix4x4 inverseMatrix);
+            Matrix4x4 inverseTranspose = Matrix4x4.Transpose(inverseMatrix);
             foreach (var geom in geometry)
             {
                 foreach (var channel in geom.Vertices.Channels)
@@ -71,8 +74,8 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
                         for (int i = 0; i < vector3Channel.Count; i++)
                         {
                             Vector3 normal = vector3Channel[i];
-                            Vector3.TransformNormal(ref normal, ref inverseTranspose, out normal);
-                            Vector3.Normalize(ref normal, out normal);
+                            normal = Vector3.TransformNormal(normal, inverseTranspose);
+                            normal = Vector3.Normalize(normal);
                             vector3Channel[i] = normal;
                         }
                     }

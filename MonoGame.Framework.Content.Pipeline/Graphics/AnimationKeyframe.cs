@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 
 namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
@@ -15,7 +16,7 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
     public sealed class AnimationKeyframe : IComparable<AnimationKeyframe>
     {
         TimeSpan time;
-        Matrix transform;
+        Matrix4x4 transform;
 
         /// <summary>
         /// Gets the time offset from the start of the animation to the position described by this keyframe.
@@ -31,7 +32,7 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
         /// <summary>
         /// Gets or sets the position described by this keyframe.
         /// </summary>
-        public Matrix Transform
+        public Matrix4x4 Transform
         {
             get
             {
@@ -48,7 +49,7 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
         /// </summary>
         /// <param name="time">Time offset of the keyframe.</param>
         /// <param name="transform">Position of the keyframe.</param>
-        public AnimationKeyframe(TimeSpan time, Matrix transform)
+        public AnimationKeyframe(TimeSpan time, Matrix4x4 transform)
         {
             this.time = time;
             this.transform = transform;

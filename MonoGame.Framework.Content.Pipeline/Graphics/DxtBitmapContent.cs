@@ -6,6 +6,7 @@ using System;
 using Microsoft.Xna.Framework.Graphics;
 using Nvidia.TextureTools;
 using System.Runtime.InteropServices;
+using System.Numerics;
 
 namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
 {

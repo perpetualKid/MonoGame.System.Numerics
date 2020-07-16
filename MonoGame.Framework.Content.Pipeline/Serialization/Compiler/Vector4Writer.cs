@@ -3,7 +3,7 @@
 // file 'LICENSE.txt', which is part of this source code package.
 
 using System;
-using TOutput = Microsoft.Xna.Framework.Vector4;
+using System.Numerics;
 
 namespace Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler
 {
@@ -11,14 +11,14 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler
     /// Writes the Vector4 value to the output.
     /// </summary>
     [ContentTypeWriter]
-    class Vector4Writer : BuiltInContentWriter<TOutput>
+    class Vector4Writer : BuiltInContentWriter<Vector4>
     {
         /// <summary>
         /// Writes the value to the output.
         /// </summary>
         /// <param name="output">The output writer object.</param>
         /// <param name="value">The value to write to the output.</param>
-        protected internal override void Write(ContentWriter output, TOutput value)
+        protected internal override void Write(ContentWriter output, Vector4 value)
         {
             output.Write(value);
         }

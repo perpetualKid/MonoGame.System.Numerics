@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Numerics;
 using System.Xml;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -282,7 +283,7 @@ namespace MonoGame.Tests.ContentPipeline
                 Assert.AreEqual(new Vector4(1, 2, 3, 4), mathTypes.Vector4);
                 Assert.AreEqual(new Quaternion(1, 2, 3, 4), mathTypes.Quaternion);
                 Assert.AreEqual(new Plane(1, 2, 3, 4), mathTypes.Plane);
-                Assert.AreEqual(new Matrix(1, 2, 3, 4, 5 , 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16), mathTypes.Matrix);
+                Assert.AreEqual(new Matrix4x4(1, 2, 3, 4, 5 , 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16), mathTypes.Matrix);
                 Assert.AreEqual(Color.CornflowerBlue, mathTypes.Color);
                 Assert.NotNull(mathTypes.Vector2Array);
                 Assert.AreEqual(2, mathTypes.Vector2Array.Length);

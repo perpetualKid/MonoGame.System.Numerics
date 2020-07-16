@@ -2,6 +2,8 @@
 // This file is subject to the terms and conditions defined in
 // file 'LICENSE.txt', which is part of this source code package.
 
+using System.Numerics;
+
 namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
 {
     /// <summary>
@@ -10,7 +12,7 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
     [System.Diagnostics.DebuggerDisplay("Node '{Name}'")]
     public class NodeContent : ContentItem
     {
-        Matrix transform;
+        Matrix4x4 transform;
         NodeContent parent;
         NodeContentCollection children;
         AnimationContentDictionary animations;
@@ -18,7 +20,7 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
         /// <summary>
         /// Gets the value of the local Transform property, multiplied by the AbsoluteTransform of the parent.
         /// </summary>
-        public Matrix AbsoluteTransform
+        public Matrix4x4 AbsoluteTransform
         {
             get
             {
@@ -69,7 +71,7 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
         /// Gets the transform matrix of the scene.
         /// The transform matrix defines a local coordinate system for the content in addition to any children of this object.
         /// </summary>
-        public Matrix Transform
+        public Matrix4x4 Transform
         {
             get
             {
@@ -88,7 +90,7 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
         {
             children = new NodeContentCollection(this);
             animations = new AnimationContentDictionary();
-            Transform = Matrix.Identity;
+            Transform = Matrix4x4.Identity;
         }
     }
 }

@@ -39,16 +39,11 @@
     <Compile Include="..\..\MonoGame.Framework\Graphics\States\TextureFilterMode.cs" />
     <Compile Include="..\..\MonoGame.Framework\Graphics\Vertices\VertexElementUsage.cs" />
     <Compile Include="..\..\MonoGame.Framework\MathHelper.cs" />
-    <Compile Include="..\..\MonoGame.Framework\Matrix.cs" />
-    <Compile Include="..\..\MonoGame.Framework\Plane.cs" />
+    <Compile Include="..\..\MonoGame.Framework\MatrixExtension.cs" />
     <Compile Include="..\..\MonoGame.Framework\Point.cs" />
     <Compile Include="..\..\MonoGame.Framework\PlaneIntersectionType.cs" />
-    <Compile Include="..\..\MonoGame.Framework\Quaternion.cs" />
     <Compile Include="..\..\MonoGame.Framework\Ray.cs" />
     <Compile Include="..\..\MonoGame.Framework\Rectangle.cs" />
-    <Compile Include="..\..\MonoGame.Framework\Vector2.cs" />
-    <Compile Include="..\..\MonoGame.Framework\Vector3.cs" />
-    <Compile Include="..\..\MonoGame.Framework\Vector4.cs" />
     <Compile Include="..\..\MonoGame.Framework\Design\Vector2TypeConverter.cs" />
     <Compile Include="..\..\MonoGame.Framework\Design\Vector3TypeConverter.cs" />
     <Compile Include="..\..\MonoGame.Framework\Design\Vector4TypeConverter.cs" />

@@ -4,6 +4,8 @@
 
 using System;
 using System.ComponentModel;
+using System.Numerics;
+
 using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
 using Microsoft.Xna.Framework.Graphics;
 

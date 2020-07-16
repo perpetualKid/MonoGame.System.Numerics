@@ -7,7 +7,7 @@ using System.Numerics;
 
 namespace Microsoft.Xna.Framework
 {
-    internal static class MatrixExtension
+    public static class MatrixExtension
     {
         /// <summary>
         /// Copy the values of specified <see cref="Matrix4x4"/> to the float array.
@@ -29,7 +29,7 @@ namespace Microsoft.Xna.Framework
         }
     }
 
-    internal static class Vector2Extension
+    public static class Vector2Extension
     {
         /// <summary>
         /// Creates a new <see cref="Vector2"/> that contains CatmullRom interpolation of the specified vectors.
@@ -153,7 +153,7 @@ namespace Microsoft.Xna.Framework
 
     }
 
-    internal static class Vector3Extension
+    public static class Vector3Extension
     {
         /// <summary>
         /// Creates a new <see cref="Vector3"/> that contains members from another vector rounded towards positive infinity.
@@ -229,7 +229,7 @@ namespace Microsoft.Xna.Framework
 
     }
 
-    internal static class Vector4Extension
+    public static class Vector4Extension
     {
         /// <summary>
         /// Creates a new <see cref="Vector4"/> that contains hermite spline interpolation.
@@ -321,14 +321,26 @@ namespace Microsoft.Xna.Framework
             result.Z = (float)Math.Round(value.Z);
             result.W = (float)Math.Round(value.W);
         }
-
-
-
     }
 
-    internal static class PlaneExtension
+    public static class PlaneExtension
     {
-        internal static PlaneIntersectionType Intersects(in this Plane plane, in System.Numerics.Vector3 point)
+        public static PlaneIntersectionType Intersects(in this Plane plane, BoundingBox box)
+        {
+            return box.Intersects(plane);
+        }
+
+        public static PlaneIntersectionType Intersects(in this Plane plane,  BoundingFrustum frustum)
+        {
+            return frustum.Intersects(plane);
+        }
+
+        public static PlaneIntersectionType Intersects(in this Plane plane, BoundingSphere sphere)
+        {
+            return sphere.Intersects(plane);
+        }
+
+        public static PlaneIntersectionType Intersects(in this Plane plane, in Vector3 point)
         {
             float distance = Plane.DotCoordinate(plane, point);
 

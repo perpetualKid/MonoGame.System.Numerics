@@ -5,6 +5,7 @@
 using System;
 using Microsoft.Xna.Framework.Graphics;
 using ATI.TextureConverter;
+using System.Numerics;
 
 namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
 {

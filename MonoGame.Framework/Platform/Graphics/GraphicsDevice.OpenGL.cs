@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+using System.Numerics;
 
 #if ANGLE
 using OpenTK.Graphics;

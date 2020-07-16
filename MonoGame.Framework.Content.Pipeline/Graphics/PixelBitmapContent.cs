@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Content.Pipeline.Utilities;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
 using System;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 

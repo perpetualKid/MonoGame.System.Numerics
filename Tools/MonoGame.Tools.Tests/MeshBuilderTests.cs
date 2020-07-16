@@ -8,6 +8,7 @@ using NUnit.Framework;
 using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content.Pipeline;
+using System.Numerics;
 
 namespace MonoGame.Tests.ContentPipeline
 {
@@ -17,7 +18,7 @@ namespace MonoGame.Tests.ContentPipeline
         public void NodeContentInitializesTransformToIdentity()
         {
             var nodeContent = new NodeContent();
-            Assert.AreEqual(Matrix.Identity, nodeContent.Transform);
+            Assert.AreEqual(Matrix4x4.Identity, nodeContent.Transform);
         }
 
         private readonly BasicMaterialContent material1 = new BasicMaterialContent
@@ -123,7 +124,7 @@ namespace MonoGame.Tests.ContentPipeline
             Assert.NotNull(output.Geometry[0].Vertices.Channels[VertexChannelNames.Normal(0)]);
 
             Assert.AreEqual(material1, output.Geometry[0].Material);
-            Assert.AreEqual(Matrix.Identity, output.Transform);
+            Assert.AreEqual(Matrix4x4.Identity, output.Transform);
 
             Assert.AreEqual(3, output.Positions.Count);
             Assert.AreEqual("Mesh1", output.Name);
@@ -201,8 +202,8 @@ namespace MonoGame.Tests.ContentPipeline
             Assert.IsEmpty(mesh.Animations);
             Assert.IsEmpty(mesh.Children);
             Assert.IsEmpty(mesh.OpaqueData);
-            Assert.AreEqual(Matrix.Identity, mesh.AbsoluteTransform);
-            Assert.AreEqual(Matrix.Identity, mesh.Transform);
+            Assert.AreEqual(Matrix4x4.Identity, mesh.AbsoluteTransform);
+            Assert.AreEqual(Matrix4x4.Identity, mesh.Transform);
             Assert.IsNull(mesh.Parent);
             Assert.IsNull(mesh.Identity);
         }

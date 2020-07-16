@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
+using System.Numerics;
 
 namespace MonoGame.Tests.ContentPipeline
 {
@@ -63,8 +64,8 @@ namespace MonoGame.Tests.ContentPipeline
 
             Assert.AreEqual(0, nodeContent.Animations.Count);
 
-            Assert.AreEqual(Matrix.Identity, nodeContent.Transform);
-            Assert.AreEqual(Matrix.Identity, nodeContent.AbsoluteTransform);
+            Assert.AreEqual(Matrix4x4.Identity, nodeContent.Transform);
+            Assert.AreEqual(Matrix4x4.Identity, nodeContent.AbsoluteTransform);
 
             Assert.NotNull(nodeContent.Identity);
             Assert.NotNull(nodeContent.Identity.SourceFilename);
@@ -82,8 +83,8 @@ namespace MonoGame.Tests.ContentPipeline
             Assert.AreEqual(0, meshContent.Children.Count);
             Assert.AreEqual(0, meshContent.Animations.Count);
             Assert.AreEqual(0, meshContent.OpaqueData.Count);
-            Assert.AreEqual(Matrix.Identity, meshContent.AbsoluteTransform);
-            Assert.AreEqual(Matrix.Identity, meshContent.Transform);
+            Assert.AreEqual(Matrix4x4.Identity, meshContent.AbsoluteTransform);
+            Assert.AreEqual(Matrix4x4.Identity, meshContent.Transform);
             Assert.AreEqual(5, meshContent.Geometry.Count);
 
             // TODO: MG returns more positions than XNA.

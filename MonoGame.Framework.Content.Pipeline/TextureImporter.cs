@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics.PackedVector;
 using FreeImageAPI;
 using MonoGame.Utilities;
 using StbImageSharp;
+using System.Numerics;
 
 namespace Microsoft.Xna.Framework.Content.Pipeline
 {

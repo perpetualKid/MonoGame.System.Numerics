@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Numerics;
 
 namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
 {
@@ -534,17 +535,17 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
         /// <remarks>The node transforms themselves are unaffected.</remarks>
         /// <param name="scene">The root node of the scene to transform.</param>
         /// <param name="transform">The transform matrix to apply to the scene.</param>
-        public static void TransformScene(NodeContent scene, Matrix transform)
+        public static void TransformScene(NodeContent scene, Matrix4x4 transform)
         {
             if (scene == null)
                 throw new ArgumentException("scene");
 
             // If the transformation is an identity matrix, this is a no-op and
             // we can save ourselves a bunch of work in the first place.
-            if (transform == Matrix.Identity)
+            if (transform == Matrix4x4.Identity)
                 return;
 
-            var inverseTransform = Matrix.Invert(transform);
+            Matrix4x4.Invert(transform, out Matrix4x4 inverseTransform);
 
             var work = new Stack<NodeContent>();
             work.Push(scene);
@@ -579,7 +580,7 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
         /// <see langword="true"/> if <paramref name="xform"/> is left-handed; otherwise,
         /// <see langword="false"/> if <paramref name="xform"/> is right-handed.
         /// </returns>
-        internal static bool IsLeftHanded(ref Matrix xform)
+        internal static bool IsLeftHanded(ref Matrix4x4 xform)
         {
             // Check sign of determinant of upper-left 3x3 matrix:
             //   positive determinant ... right-handed
@@ -588,7 +589,7 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
             // Since XNA does not have a 3x3 matrix, use the "scalar triple product"
             // (see http://en.wikipedia.org/wiki/Triple_product) to calculate the
             // determinant.
-            float d = Vector3.Dot(xform.Right, Vector3.Cross(xform.Forward, xform.Up));
+            float d = Vector3.Dot(new Vector3(xform.M11, xform.M12, xform.M13), Vector3.Cross(new Vector3(-xform.M31, -xform.M32, -xform.M33), new Vector3(xform.M21, xform.M22, xform.M23)));
             return d < 0.0f;
         }
 

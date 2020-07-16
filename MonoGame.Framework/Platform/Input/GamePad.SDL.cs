@@ -5,6 +5,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Numerics;
+
 using MonoGame.Utilities;
 
 namespace Microsoft.Xna.Framework.Input

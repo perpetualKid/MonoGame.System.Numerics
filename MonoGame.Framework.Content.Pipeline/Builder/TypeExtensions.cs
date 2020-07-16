@@ -3,6 +3,8 @@
 // file 'LICENSE.txt', which is part of this source code package.
 
 using System.Collections.Generic;
+using System.Numerics;
+
 using Microsoft.Xna.Framework;
 
 namespace MonoGame.Framework.Content.Pipeline.Builder
