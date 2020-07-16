@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics;
 using System.Text;
 using System.Runtime.Serialization;
+using System.Numerics;
 
 namespace Microsoft.Xna.Framework
 {

@@ -8,6 +8,8 @@ using System.Runtime.InteropServices;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Numerics;
+using Vector3 = Microsoft.Xna.Framework.Vector3;
 
 namespace MonoGame.Tests.Graphics
 {

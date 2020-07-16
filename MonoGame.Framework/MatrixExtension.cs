@@ -46,6 +46,126 @@ namespace Microsoft.Xna.Framework
             return new System.Numerics.Vector2(vector.X, vector.Y);
         }
 
+        /// <summary>
+        /// Creates a new <see cref="Vector2"/> that contains CatmullRom interpolation of the specified vectors.
+        /// </summary>
+        /// <param name="value1">The first vector in interpolation.</param>
+        /// <param name="value2">The second vector in interpolation.</param>
+        /// <param name="value3">The third vector in interpolation.</param>
+        /// <param name="value4">The fourth vector in interpolation.</param>
+        /// <param name="amount">Weighting factor.</param>
+        /// <returns>The result of CatmullRom interpolation.</returns>
+        public static Vector2 CatmullRom(Vector2 value1, Vector2 value2, Vector2 value3, Vector2 value4, float amount)
+        {
+            return new Vector2(
+                MathHelper.CatmullRom(value1.X, value2.X, value3.X, value4.X, amount),
+                MathHelper.CatmullRom(value1.Y, value2.Y, value3.Y, value4.Y, amount));
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="Vector2"/> that contains CatmullRom interpolation of the specified vectors.
+        /// </summary>
+        /// <param name="value1">The first vector in interpolation.</param>
+        /// <param name="value2">The second vector in interpolation.</param>
+        /// <param name="value3">The third vector in interpolation.</param>
+        /// <param name="value4">The fourth vector in interpolation.</param>
+        /// <param name="amount">Weighting factor.</param>
+        /// <param name="result">The result of CatmullRom interpolation as an output parameter.</param>
+        public static void CatmullRom(ref Vector2 value1, ref Vector2 value2, ref Vector2 value3, ref Vector2 value4, float amount, out Vector2 result)
+        {
+            result.X = MathHelper.CatmullRom(value1.X, value2.X, value3.X, value4.X, amount);
+            result.Y = MathHelper.CatmullRom(value1.Y, value2.Y, value3.Y, value4.Y, amount);
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="Vector2"/> that contains hermite spline interpolation.
+        /// </summary>
+        /// <param name="value1">The first position vector.</param>
+        /// <param name="tangent1">The first tangent vector.</param>
+        /// <param name="value2">The second position vector.</param>
+        /// <param name="tangent2">The second tangent vector.</param>
+        /// <param name="amount">Weighting factor.</param>
+        /// <returns>The hermite spline interpolation vector.</returns>
+        public static Vector2 Hermite(Vector2 value1, Vector2 tangent1, Vector2 value2, Vector2 tangent2, float amount)
+        {
+            return new Vector2(MathHelper.Hermite(value1.X, tangent1.X, value2.X, tangent2.X, amount), MathHelper.Hermite(value1.Y, tangent1.Y, value2.Y, tangent2.Y, amount));
+        }
+
+        /// <summary>
+        /// Gets a <see cref="Point"/> representation for this object.
+        /// </summary>
+        /// <returns>A <see cref="Point"/> representation for this object.</returns>
+        public static Point ToPoint(in this Vector2 vector2)
+        {
+            return new Point((int)vector2.X, (int)vector2.Y);
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="Vector2"/> that contains members from another vector rounded towards positive infinity.
+        /// </summary>
+        /// <param name="value">Source <see cref="XNAPlane"/>.</param>
+        /// <returns>The rounded <see cref="XNAPlane"/>.</returns>
+        public static void Ceiling(ref this Vector2 value)
+        {
+            value.X = (float)Math.Ceiling(value.X);
+            value.Y = (float)Math.Ceiling(value.Y);
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="Vector2"/> that contains members from another vector rounded towards positive infinity.
+        /// </summary>
+        /// <param name="value">Source <see cref="Vector2"/>.</param>
+        /// <param name="result">The rounded <see cref="Vector2"/>.</param>
+        public static void Ceiling(in this Vector2 value, out Vector2 result)
+        {
+            result.X = (float)Math.Ceiling(value.X);
+            result.Y = (float)Math.Ceiling(value.Y);
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="XNAPlane"/> that contains members from another vector rounded towards negative infinity.
+        /// </summary>
+        /// <param name="value">Source <see cref="Vector2"/>.</param>
+        /// <returns>The rounded <see cref="Vector2"/>.</returns>
+        public static void Floor(ref this Vector2 value)
+        {
+            value.X = (float)Math.Floor(value.X);
+            value.Y = (float)Math.Floor(value.Y);
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="Vector2"/> that contains members from another vector rounded towards negative infinity.
+        /// </summary>
+        /// <param name="value">Source <see cref="Vector2"/>.</param>
+        /// <param name="result">The rounded <see cref="Vector2"/>.</param>
+        public static void Floor(in this Vector2 value, out Vector2 result)
+        {
+            result.X = (float)Math.Floor(value.X);
+            result.Y = (float)Math.Floor(value.Y);
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="Vector2"/> that contains members from another vector rounded to the nearest integer value.
+        /// </summary>
+        /// <param name="value">Source <see cref="Vector2"/>.</param>
+        /// <returns>The rounded <see cref="Vector2"/>.</returns>
+        public static void Round(ref this Vector2 value)
+        {
+            value.X = (float)Math.Round(value.X);
+            value.Y = (float)Math.Round(value.Y);
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="Vector2"/> that contains members from another vector rounded to the nearest integer value.
+        /// </summary>
+        /// <param name="value">Source <see cref="Vector2"/>.</param>
+        /// <param name="result">The rounded <see cref="Vector2"/>.</param>
+        public static void Round(in this Vector2 value, out Vector2 result)
+        {
+            result.X = (float)Math.Round(value.X);
+            result.Y = (float)Math.Round(value.Y);
+        }
+
     }
 
     internal static class Vector3Extension

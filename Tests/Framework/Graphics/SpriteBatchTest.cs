@@ -9,8 +9,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NUnit.Framework;
 
-using Vector2 = Microsoft.Xna.Framework.Vector2;
-
 namespace MonoGame.Tests.Graphics {
 	[TestFixture]
 	class SpriteBatchTest : GraphicsDeviceTestFixtureBase {

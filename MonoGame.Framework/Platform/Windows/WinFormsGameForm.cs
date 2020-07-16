@@ -3,6 +3,7 @@
 // file 'LICENSE.txt', which is part of this source code package.
 
 using System;
+using System.Numerics;
 using System.Windows.Forms;
 using Microsoft.Xna.Framework.Input.Touch;
 using MonoGame.Framework;

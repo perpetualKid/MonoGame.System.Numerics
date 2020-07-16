@@ -4,6 +4,8 @@
 
 using System;
 using System.Diagnostics;
+using System.Numerics;
+
 using GBF = SharpDX.XInput.GamepadButtonFlags;
 
 namespace Microsoft.Xna.Framework.Input

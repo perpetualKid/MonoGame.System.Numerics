@@ -790,8 +790,7 @@ namespace Microsoft.Xna.Framework.Graphics
                     p.Y += pCurrentGlyph->BoundsInTexture.Height - spriteFont.LineSpacing;
                 p.Y += pCurrentGlyph->Cropping.Y;
 
-                    Matrix tempTransformation = transformation.ToMatrix();
-                Vector2.Transform(ref p, ref tempTransformation, out p);
+                p = Vector2.Transform(p, transformation);
 
                 var item = _batcher.CreateBatchItem();               
                 item.Texture = spriteFont.Texture;
@@ -1073,8 +1072,7 @@ namespace Microsoft.Xna.Framework.Graphics
                     p.Y += pCurrentGlyph->BoundsInTexture.Height - spriteFont.LineSpacing;
                 p.Y += pCurrentGlyph->Cropping.Y;
 
-                    //                Vector2.Transform(ref p, ref transformation, out p);
-                    p = Vector2.Transform(p, transformation.ToMatrix());
+                p = Vector2.Transform(p, transformation);
                 var item = _batcher.CreateBatchItem();               
                 item.Texture = spriteFont.Texture;
                 item.SortKey = sortKey;
