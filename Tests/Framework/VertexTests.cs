@@ -8,8 +8,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NUnit.Framework;
 
-using Vector3 = Microsoft.Xna.Framework.Vector3;
-
 namespace MonoGame.Tests.Framework
 {
     public class VertexTests
@@ -59,7 +57,7 @@ namespace MonoGame.Tests.Framework
             var vertex1 = new VertexPositionColor(Vector3.One, Color.Blue);
             var vertex2 = new VertexPositionColor(Vector3.One, Color.Blue);
             var vertex3 = new VertexPositionColor(Vector3.One, Color.Red);
-            var vertex4 = new VertexPositionColor(Vector3.Forward, Color.Blue);
+            var vertex4 = new VertexPositionColor(Vector3.UnitZ * -1, Color.Blue);
 
             Assert.That(vertex1 == vertex2, Is.True);
             Assert.That(vertex1 != vertex2, Is.False);
@@ -95,8 +93,8 @@ namespace MonoGame.Tests.Framework
             var vertex1 = new VertexPositionColorTexture(Vector3.One, Color.Blue, Vector2.One);
             var vertex2 = new VertexPositionColorTexture(Vector3.One, Color.Blue, Vector2.One);
             var vertex3 = new VertexPositionColorTexture(Vector3.One, Color.Red, Vector2.One);
-            var vertex4 = new VertexPositionColorTexture(Vector3.Forward, Color.Blue, Vector2.One);
-            var vertex5 = new VertexPositionColorTexture(Vector3.Forward, Color.Blue, Vector2.Zero);
+            var vertex4 = new VertexPositionColorTexture(Vector3.UnitZ * -1, Color.Blue, Vector2.One);
+            var vertex5 = new VertexPositionColorTexture(Vector3.UnitZ * -1, Color.Blue, Vector2.Zero);
 
             Assert.That(vertex1 == vertex2, Is.True);
             Assert.That(vertex1 != vertex2, Is.False);
@@ -132,11 +130,11 @@ namespace MonoGame.Tests.Framework
             Assert.That(vertexElements[2].VertexElementFormat, Is.EqualTo(VertexElementFormat.Vector2));
             Assert.That(vertexElements[2].VertexElementUsage, Is.EqualTo(VertexElementUsage.TextureCoordinate));
 
-            var vertex1 = new VertexPositionNormalTexture(Vector3.One, Vector3.Forward, Vector2.One);
-            var vertex2 = new VertexPositionNormalTexture(Vector3.One, Vector3.Forward, Vector2.One);
-            var vertex3 = new VertexPositionNormalTexture(Vector3.One, Vector3.Backward, Vector2.One);
-            var vertex4 = new VertexPositionNormalTexture(Vector3.Forward, Vector3.Backward, Vector2.One);
-            var vertex5 = new VertexPositionNormalTexture(Vector3.Forward, Vector3.Backward, Vector2.Zero);
+            var vertex1 = new VertexPositionNormalTexture(Vector3.One, Vector3.UnitZ * -1, Vector2.One);
+            var vertex2 = new VertexPositionNormalTexture(Vector3.One, Vector3.UnitZ * -1, Vector2.One);
+            var vertex3 = new VertexPositionNormalTexture(Vector3.One, Vector3.UnitZ, Vector2.One);
+            var vertex4 = new VertexPositionNormalTexture(Vector3.UnitZ * -1, Vector3.UnitZ, Vector2.One);
+            var vertex5 = new VertexPositionNormalTexture(Vector3.UnitZ * -1, Vector3.UnitZ, Vector2.Zero);
 
             Assert.That(vertex1 == vertex2, Is.True);
             Assert.That(vertex1 != vertex2, Is.False);

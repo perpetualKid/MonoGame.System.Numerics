@@ -77,8 +77,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-using Vector3 = Microsoft.Xna.Framework.Vector3;
-
 namespace MonoGame.Tests.Components
 {
 	class SpaceshipModelDrawComponent : VisualTestDrawableGameComponent

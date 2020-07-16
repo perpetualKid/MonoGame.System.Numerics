@@ -10,8 +10,6 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Tests.Components;
 using NUnit.Framework;
 
-using Vector3 = Microsoft.Xna.Framework.Vector3;
-
 namespace MonoGame.Tests.Graphics
 {
     [TestFixture]
@@ -47,7 +45,7 @@ namespace MonoGame.Tests.Graphics
                 rs = new RasterizerState();
                 rs.DepthBias = bias;
 
-                var rot = Matrix.CreateRotationZ(-r);
+                var rot = Matrix4x4.CreateRotationZ(-r);
                 var v1 = Vector3.Transform(new Vector3(-0.5f, 0f, 0f), rot);
                 var v2 = Vector3.Transform(new Vector3(0.2f, 0.9f, 0f), rot);
                 var v3 = Vector3.Transform(new Vector3(0.2f, -0.9f, 0f), rot);

@@ -172,14 +172,14 @@ namespace Microsoft.Xna.Framework
 
         public void Intersects(ref Plane plane, out float? result)
         {
-            var den = System.Numerics.Vector3.Dot(Direction.FromVector3(), plane.Normal);
+            var den = Vector3.Dot(Direction, plane.Normal);
             if (Math.Abs(den) < 0.00001f)
             {
                 result = null;
                 return;
             }
 
-            result = (-plane.D - System.Numerics.Vector3.Dot(plane.Normal, Position.FromVector3())) / den;
+            result = (-plane.D - Vector3.Dot(plane.Normal, Position)) / den;
 
             if (result < 0.0f)
             {
@@ -211,7 +211,7 @@ namespace Microsoft.Xna.Framework
                 return;
             }
 
-            Vector3.Dot(ref this.Direction, ref difference, out distanceAlongRay);
+            distanceAlongRay = Vector3.Dot(Direction, difference);
             // If the ray is pointing away from the sphere then we don't ever intersect
             if (distanceAlongRay < 0)
             {
@@ -246,8 +246,8 @@ namespace Microsoft.Xna.Framework
             get
             {
                 return string.Concat(
-                    "Pos( ", this.Position.DebugDisplayString, " )  \r\n",
-                    "Dir( ", this.Direction.DebugDisplayString, " )"
+                    "Pos( ", this.Position.ToString(), " )  \r\n",
+                    "Dir( ", this.Direction.ToString(), " )"
                 );
             }
         }

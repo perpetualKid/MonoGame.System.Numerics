@@ -4,8 +4,6 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Numerics;
 
-using Vector3 = Microsoft.Xna.Framework.Vector3;
-
 namespace MonoGame.Tests.Framework
 {
     class Vector4Test
@@ -53,8 +51,8 @@ namespace MonoGame.Tests.Framework
             };
 
             Assert.That(expectedResult, Is.EqualTo(new Vector4(1,2,3,4)).Using(Vector4Comparer.Epsilon));
-            Assert.That(expectedResult, Is.EqualTo(new Vector4(new Vector2(1,2).FromVector2(),3,4)).Using(Vector4Comparer.Epsilon));
-            Assert.That(expectedResult, Is.EqualTo(new Vector4(new Vector3(1,2,3).FromVector3(),4)).Using(Vector4Comparer.Epsilon));
+            Assert.That(expectedResult, Is.EqualTo(new Vector4(new Vector2(1,2),3,4)).Using(Vector4Comparer.Epsilon));
+            Assert.That(expectedResult, Is.EqualTo(new Vector4(new Vector3(1,2,3),4)).Using(Vector4Comparer.Epsilon));
             Assert.That(expectedResult2, Is.EqualTo(new Vector4(2.2f)).Using(Vector4Comparer.Epsilon));
         }
 

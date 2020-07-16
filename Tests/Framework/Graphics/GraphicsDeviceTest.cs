@@ -11,7 +11,6 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using NUnit.Framework;
 
-using Vector3 = Microsoft.Xna.Framework.Vector3;
 #if DESKTOPGL
 using MonoGame.OpenGL;
 #endif

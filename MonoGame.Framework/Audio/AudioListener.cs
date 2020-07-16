@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Text;
 
 namespace Microsoft.Xna.Framework.Audio
@@ -15,9 +16,9 @@ namespace Microsoft.Xna.Framework.Audio
 	{
 		public AudioListener ()
 		{
-			Forward = Vector3.Forward;
+			Forward = Vector3.UnitZ * -1;
 			Position = Vector3.Zero;
-			Up = Vector3.Up;
+			Up = Vector3.UnitY;
 			Velocity = Vector3.Zero;
 		}
 
@@ -45,7 +46,7 @@ namespace Microsoft.Xna.Framework.Audio
         /// Gets or sets the listener's up vector..
         /// </summary>
         /// <remarks>
-        /// <para>Defaults to Vector3.Up (New Vector3(0, -1, 0)).</para>
+        /// <para>Defaults to Vector3.UnitY (New Vector3(0, -1, 0)).</para>
         /// <para>Used with AudioListener.Velocity and AudioEmitter.Velocity to calculate Doppler values.</para>
         /// <para>The values of the Forward and Up vectors must be orthonormal.</para>
         /// </remarks>

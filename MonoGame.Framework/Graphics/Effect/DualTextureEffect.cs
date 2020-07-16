@@ -301,7 +301,7 @@ namespace Microsoft.Xna.Framework.Graphics
             // Recompute the diffuse/alpha material color parameter?
             if ((dirtyFlags & EffectDirtyFlags.MaterialColor) != 0)
             {
-                diffuseColorParam.SetValue(new Vector4(diffuseColor.FromVector3() * alpha, alpha));
+                diffuseColorParam.SetValue(new Vector4(diffuseColor * alpha, alpha));
 
                 dirtyFlags &= ~EffectDirtyFlags.MaterialColor;
             }

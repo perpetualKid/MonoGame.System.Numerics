@@ -75,8 +75,6 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-using Vector3 = Microsoft.Xna.Framework.Vector3;
-
 namespace MonoGame.Tests.Components
 {
 	class TexturedQuadComponent : VisualTestDrawableGameComponent {
@@ -171,7 +169,7 @@ namespace MonoGame.Tests.Components
 		{
 			base.LoadContent();
 
-			quad = new Quad(Vector3.Zero, Vector3.Backward, Vector3.Up, 1, 1);
+			quad = new Quad(Vector3.Zero, Vector3.UnitZ, Vector3.UnitY, 1, 1);
 			View = Matrix4x4.CreateLookAt(new System.Numerics.Vector3(0, 0, 2), System.Numerics.Vector3.Zero, new System.Numerics.Vector3(0, 1, 0));
 			Projection = Matrix4x4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, 4.0f / 3.0f, 1, 500);
 

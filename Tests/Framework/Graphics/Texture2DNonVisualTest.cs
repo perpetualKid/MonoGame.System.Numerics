@@ -12,8 +12,6 @@ using NUnit.Framework;
 using StbImageSharp;
 using StbImageWriteSharp;
 
-using Vector3 = Microsoft.Xna.Framework.Vector3;
-
 namespace MonoGame.Tests.Graphics
 {
     [TestFixture]

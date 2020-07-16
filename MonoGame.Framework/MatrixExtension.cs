@@ -10,9 +10,9 @@ namespace Microsoft.Xna.Framework
     internal static class MatrixExtension
     {
         /// <summary>
-        /// Copy the values of specified <see cref="Matrix"/> to the float array.
+        /// Copy the values of specified <see cref="Matrix4x4"/> to the float array.
         /// </summary>
-        /// <param name="matrix">The source <see cref="Matrix"/>.</param>
+        /// <param name="matrix">The source <see cref="Matrix4x4"/>.</param>
         /// <returns>The array which matrix values will be stored.</returns>
         /// <remarks>
         /// Required for OpenGL 2.0 projection matrix stuff.
@@ -27,25 +27,10 @@ namespace Microsoft.Xna.Framework
                                 };
             return matarray;
         }
-
-        public static Matrix ToMatrix(in this Matrix4x4 matrix)
-        {
-            return new Matrix(
-                matrix.M11, matrix.M12, matrix.M13, matrix.M14,
-                matrix.M21, matrix.M22, matrix.M23, matrix.M24,
-                matrix.M31, matrix.M32, matrix.M33, matrix.M34,
-                matrix.M41, matrix.M42, matrix.M43, matrix.M44
-                );
-        }
     }
 
     internal static class Vector2Extension
     {
-        internal static System.Numerics.Vector2 FromVector2(in this Vector2 vector)
-        {
-            return new System.Numerics.Vector2(vector.X, vector.Y);
-        }
-
         /// <summary>
         /// Creates a new <see cref="Vector2"/> that contains CatmullRom interpolation of the specified vectors.
         /// </summary>
@@ -170,9 +155,76 @@ namespace Microsoft.Xna.Framework
 
     internal static class Vector3Extension
     {
-        internal static System.Numerics.Vector3 FromVector3(in this Vector3 vector)
+        /// <summary>
+        /// Creates a new <see cref="Vector3"/> that contains members from another vector rounded towards positive infinity.
+        /// </summary>
+        /// <param name="value">Source <see cref="Vector3"/>.</param>
+        /// <returns>The rounded <see cref="Vector3"/>.</returns>
+        public static void Ceiling(ref this Vector3 value)
         {
-            return new System.Numerics.Vector3(vector.X, vector.Y, vector.Z);
+            value.X = (float)Math.Ceiling(value.X);
+            value.Y = (float)Math.Ceiling(value.Y);
+            value.Z = (float)Math.Ceiling(value.Z);
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="Vector3"/> that contains members from another vector rounded towards positive infinity.
+        /// </summary>
+        /// <param name="value">Source <see cref="Vector3"/>.</param>
+        /// <param name="result">The rounded <see cref="Vector3"/>.</param>
+        public static void Ceiling(in this Vector3 value, out Vector3 result)
+        {
+            result.X = (float)Math.Ceiling(value.X);
+            result.Y = (float)Math.Ceiling(value.Y);
+            result.Z = (float)Math.Ceiling(value.Z);
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="Vector3"/> that contains members from another vector rounded to the nearest integer value.
+        /// </summary>
+        /// <param name="value">Source <see cref="Vector3"/>.</param>
+        /// <returns>The rounded <see cref="Vector3"/>.</returns>
+        public static void Round(ref this Vector3 value)
+        {
+            value.X = (float)Math.Round(value.X);
+            value.Y = (float)Math.Round(value.Y);
+            value.Z = (float)Math.Round(value.Z);
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="Vector3"/> that contains members from another vector rounded to the nearest integer value.
+        /// </summary>
+        /// <param name="value">Source <see cref="Vector3"/>.</param>
+        /// <param name="result">The rounded <see cref="Vector3"/>.</param>
+        public static void Round(in this Vector3 value, out Vector3 result)
+        {
+            result.X = (float)Math.Round(value.X);
+            result.Y = (float)Math.Round(value.Y);
+            result.Z = (float)Math.Round(value.Z);
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="Vector3"/> that contains members from another vector rounded towards negative infinity.
+        /// </summary>
+        /// <param name="value">Source <see cref="Vector3"/>.</param>
+        /// <returns>The rounded <see cref="Vector3"/>.</returns>
+        public static void Floor(ref this Vector3 value)
+        {
+            value.X = (float)Math.Floor(value.X);
+            value.Y = (float)Math.Floor(value.Y);
+            value.Z = (float)Math.Floor(value.Z);
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="Vector3"/> that contains members from another vector rounded towards negative infinity.
+        /// </summary>
+        /// <param name="value">Source <see cref="Vector3"/>.</param>
+        /// <param name="result">The rounded <see cref="Vector3"/>.</param>
+        public static void Floor(in this Vector3 value, out Vector3 result)
+        {
+            result.X = (float)Math.Floor(value.X);
+            result.Y = (float)Math.Floor(value.Y);
+            result.Z = (float)Math.Floor(value.Z);
         }
 
     }

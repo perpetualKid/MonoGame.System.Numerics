@@ -206,7 +206,7 @@ namespace Microsoft.Xna.Framework.Graphics
         public Vector3 Project(Vector3 source, Matrix4x4 projection, Matrix4x4 view, Matrix4x4 world)
         {
             Matrix4x4 matrix = Matrix4x4.Multiply(Matrix4x4.Multiply(world, view), projection);
-		    Vector3 vector = Vector3.Transform(source, matrix.ToMatrix());
+		    Vector3 vector = Vector3.Transform(source, matrix);
 		    float a = (((source.X * matrix.M14) + (source.Y * matrix.M24)) + (source.Z * matrix.M34)) + matrix.M44;
 		    if (!WithinEpsilon(a, 1f))
 		    {
@@ -238,7 +238,7 @@ namespace Microsoft.Xna.Framework.Graphics
 		    source.X = (((source.X - this.x) / ((float) this.width)) * 2f) - 1f;
 		    source.Y = -((((source.Y - this.y) / ((float) this.height)) * 2f) - 1f);
 		    source.Z = (source.Z - this.minDepth) / (this.maxDepth - this.minDepth);
-		    Vector3 vector = Vector3.Transform(source, matrix.ToMatrix());
+		    Vector3 vector = Vector3.Transform(source, matrix);
 		    float a = (((source.X * matrix.M14) + (source.Y * matrix.M24)) + (source.Z * matrix.M34)) + matrix.M44;
 		    if (!WithinEpsilon(a, 1f))
 		    {

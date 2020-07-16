@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Text;
 
 namespace Microsoft.Xna.Framework.Audio
@@ -17,9 +18,9 @@ namespace Microsoft.Xna.Framework.Audio
 		public AudioEmitter ()
 		{
             _dopplerScale = 1.0f;
-			Forward = Vector3.Forward;
+			Forward = Vector3.UnitZ * -1;
 			Position = Vector3.Zero;
-			Up = Vector3.Up;
+			Up = Vector3.UnitY;
 			Velocity = Vector3.Zero;
 		}
 
@@ -65,7 +66,7 @@ namespace Microsoft.Xna.Framework.Audio
 
         /// <summary>Gets or sets the emitter's Up vector.</summary>
         /// <remarks>
-        /// <para>Defaults to Vector3.Up. (new Vector3(0, -1, 1)).</para>
+        /// <para>Defaults to Vector3.UnitY. (new Vector3(0, -1, 1)).</para>
         /// <para>The Up and Forward vectors must be orthonormal.</para>
         /// </remarks>
 		public Vector3 Up {

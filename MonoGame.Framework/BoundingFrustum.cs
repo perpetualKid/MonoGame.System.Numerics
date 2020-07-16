@@ -435,9 +435,9 @@ namespace Microsoft.Xna.Framework
         /// <param name="result">A plane intersection type as an output parameter.</param>
         public void Intersects(ref Plane plane, out PlaneIntersectionType result)
         {
-            result = plane.Intersects(_corners[0].FromVector3());
+            result = plane.Intersects(_corners[0]);
             for (int i = 1; i < _corners.Length; i++)
-                if (plane.Intersects(_corners[i].FromVector3()) != result)
+                if (plane.Intersects(_corners[i]) != result)
                     result = PlaneIntersectionType.Intersecting;
         }
         

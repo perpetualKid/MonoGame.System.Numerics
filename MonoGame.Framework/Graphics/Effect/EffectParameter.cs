@@ -862,18 +862,6 @@ namespace Microsoft.Xna.Framework.Graphics
             StateKey = unchecked(NextStateKey++);
 		}
 
-        public void SetValue(System.Numerics.Vector3 value)
-        {
-            if (ParameterClass != EffectParameterClass.Vector || ParameterType != EffectParameterType.Single)
-                throw new InvalidCastException();
-
-            var fData = (float[])Data;
-            fData[0] = value.X;
-            fData[1] = value.Y;
-            fData[2] = value.Z;
-            StateKey = unchecked(NextStateKey++);
-        }
-
         public void SetValue (Vector3 value)
 		{
             if (ParameterClass != EffectParameterClass.Vector || ParameterType != EffectParameterType.Single)

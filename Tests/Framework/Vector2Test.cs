@@ -96,7 +96,6 @@ namespace MonoGame.Tests.Framework
 
             var q3 = new System.Numerics.Quaternion(1, 2, 3, 4);
 
-            Matrix transformMatrix = m1.ToMatrix();
             Assert.That(expectedResult1, Is.EqualTo(System.Numerics.Vector2.Transform(v1, m1)).Using(Vector2Comparer.Epsilon));
             Assert.That(expectedResult2, Is.EqualTo(System.Numerics.Vector2.Transform(v2, q2)).Using(Vector2Comparer.Epsilon));
 
