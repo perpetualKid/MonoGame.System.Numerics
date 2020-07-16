@@ -5,6 +5,7 @@
 using System;
 using System.ComponentModel;
 using System.Globalization;
+using System.Numerics;
 
 namespace Microsoft.Xna.Framework.Design
 {

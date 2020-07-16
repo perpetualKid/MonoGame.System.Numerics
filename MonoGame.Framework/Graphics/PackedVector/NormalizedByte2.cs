@@ -4,6 +4,7 @@
 
 
 using System;
+using System.Numerics;
 
 namespace Microsoft.Xna.Framework.Graphics.PackedVector
 {
@@ -84,7 +85,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
         /// <returns>The packed vector in Vector4 format</returns>
         public Vector4 ToVector4()
         {
-            return new Vector4(ToVector2(), 0.0f, 1.0f);
+            return new Vector4(ToNumericsVector2(), 0.0f, 1.0f);
         }
 
         public Vector2 ToVector2()
@@ -93,5 +94,12 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
                 ((sbyte) ((_packed >> 0) & 0xFF)) / 127.0f,
                 ((sbyte) ((_packed >> 8) & 0xFF)) / 127.0f);
         }
+        public System.Numerics.Vector2 ToNumericsVector2()
+        {
+            return new System.Numerics.Vector2(
+                ((sbyte)((_packed >> 0) & 0xFF)) / 127.0f,
+                ((sbyte)((_packed >> 8) & 0xFF)) / 127.0f);
+        }
+
     }
 }

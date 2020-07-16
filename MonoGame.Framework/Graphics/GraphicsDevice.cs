@@ -8,7 +8,7 @@ using System.Diagnostics;
 using System.Globalization;
 using MonoGame.Utilities;
 using System.Runtime.InteropServices;
-
+using System.Numerics;
 
 namespace Microsoft.Xna.Framework.Graphics
 {

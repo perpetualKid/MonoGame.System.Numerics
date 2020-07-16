@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Numerics;
 using MonoGame.Utilities;
 using SharpDX;
 using SharpDX.Direct3D;
@@ -904,7 +905,7 @@ namespace Microsoft.Xna.Framework.Graphics
             return multisampleDesc;
         }
 
-        private void PlatformClear(ClearOptions options, Vector4 color, float depth, int stencil)
+        private void PlatformClear(ClearOptions options, System.Numerics.Vector4 color, float depth, int stencil)
         {
             // Clear options for depth/stencil buffer if not attached.
             if (_currentDepthStencilView != null)

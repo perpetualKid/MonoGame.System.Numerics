@@ -39,12 +39,118 @@ namespace Microsoft.Xna.Framework
         }
     }
 
+    internal static class Vector2Extension
+    {
+        internal static System.Numerics.Vector2 FromVector2(in this Vector2 vector)
+        {
+            return new System.Numerics.Vector2(vector.X, vector.Y);
+        }
+
+    }
+
     internal static class Vector3Extension
     {
         internal static System.Numerics.Vector3 FromVector3(in this Vector3 vector)
         {
             return new System.Numerics.Vector3(vector.X, vector.Y, vector.Z);
         }
+
+    }
+
+    internal static class Vector4Extension
+    {
+        /// <summary>
+        /// Creates a new <see cref="Vector4"/> that contains hermite spline interpolation.
+        /// </summary>
+        /// <param name="value1">The first position vector.</param>
+        /// <param name="tangent1">The first tangent vector.</param>
+        /// <param name="value2">The second position vector.</param>
+        /// <param name="tangent2">The second tangent vector.</param>
+        /// <param name="amount">Weighting factor.</param>
+        /// <returns>The hermite spline interpolation vector.</returns>
+        public static Vector4 Hermite(Vector4 value1, Vector4 tangent1, Vector4 value2, Vector4 tangent2, float amount)
+        {
+            return new Vector4(MathHelper.Hermite(value1.X, tangent1.X, value2.X, tangent2.X, amount),
+                               MathHelper.Hermite(value1.Y, tangent1.Y, value2.Y, tangent2.Y, amount),
+                               MathHelper.Hermite(value1.Z, tangent1.Z, value2.Z, tangent2.Z, amount),
+                               MathHelper.Hermite(value1.W, tangent1.W, value2.W, tangent2.W, amount));
+        }
+
+        /// <summary>
+        /// Round the members of this <see cref="Vector4"/> towards positive infinity.
+        /// </summary>
+        public static void  Ceiling(in this Vector4 vector4, out Vector4 result)
+        {
+            result.X = (float)Math.Ceiling(vector4.X);
+            result.Y = (float)Math.Ceiling(vector4.Y);
+            result.Z = (float)Math.Ceiling(vector4.Z);
+            result.W = (float)Math.Ceiling(vector4.W);
+        }
+
+        /// <summary>
+        /// Round the members of this <see cref="Vector4"/> towards positive infinity.
+        /// </summary>
+        public static void Ceiling(ref this Vector4 vector4)
+        {
+            vector4.X = (float)Math.Ceiling(vector4.X);
+            vector4.Y = (float)Math.Ceiling(vector4.Y);
+            vector4.Z = (float)Math.Ceiling(vector4.Z);
+            vector4.W = (float)Math.Ceiling(vector4.W);
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="Vector4"/> that contains members from another vector rounded towards negative infinity.
+        /// </summary>
+        /// <param name="value">Source <see cref="Vector4"/>.</param>
+        /// <returns>The rounded <see cref="Vector4"/>.</returns>
+        public static void Floor(ref this Vector4 value)
+        {
+            value.X = (float)Math.Floor(value.X);
+            value.Y = (float)Math.Floor(value.Y);
+            value.Z = (float)Math.Floor(value.Z);
+            value.W = (float)Math.Floor(value.W);
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="Vector4"/> that contains members from another vector rounded towards negative infinity.
+        /// </summary>
+        /// <param name="value">Source <see cref="Vector4"/>.</param>
+        /// <param name="result">The rounded <see cref="Vector4"/>.</param>
+        public static void Floor(in this Vector4 value, out Vector4 result)
+        {
+            result.X = (float)Math.Floor(value.X);
+            result.Y = (float)Math.Floor(value.Y);
+            result.Z = (float)Math.Floor(value.Z);
+            result.W = (float)Math.Floor(value.W);
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="Vector4"/> that contains members from another vector rounded to the nearest integer value.
+        /// </summary>
+        /// <param name="value">Source <see cref="Vector4"/>.</param>
+        /// <returns>The rounded <see cref="Vector4"/>.</returns>
+        public static void Round(ref this Vector4 value)
+        {
+            value.X = (float)Math.Round(value.X);
+            value.Y = (float)Math.Round(value.Y);
+            value.Z = (float)Math.Round(value.Z);
+            value.W = (float)Math.Round(value.W);
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="Vector4"/> that contains members from another vector rounded to the nearest integer value.
+        /// </summary>
+        /// <param name="value">Source <see cref="Vector4"/>.</param>
+        /// <param name="result">The rounded <see cref="Vector4"/>.</param>
+        public static void Round(in this Vector4 value, out Vector4 result)
+        {
+            result.X = (float)Math.Round(value.X);
+            result.Y = (float)Math.Round(value.Y);
+            result.Z = (float)Math.Round(value.Z);
+            result.W = (float)Math.Round(value.W);
+        }
+
+
 
     }
 

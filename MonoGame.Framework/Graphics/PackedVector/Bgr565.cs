@@ -3,6 +3,7 @@
 // file 'LICENSE.txt', which is part of this source code package.
 
 using System;
+using System.Numerics;
 
 namespace Microsoft.Xna.Framework.Graphics.PackedVector
 {
@@ -69,6 +70,18 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
         }
 
         /// <summary>
+        /// Gets the packed vector in Vector3 format.
+        /// </summary>
+        /// <returns>The packed vector in Vector3 format</returns>
+        public System.Numerics.Vector3 ToNumericsVector3()
+        {
+            return new System.Numerics.Vector3((float)(((_packedValue >> 11) & 0x1F) * (1.0f / 31.0f)),
+                (float)(((_packedValue >> 5) & 0x3F) * (1.0f / 63.0f)),
+                (float)((_packedValue & 0x1F) * (1.0f / 31.0f))
+                );
+        }
+
+        /// <summary>
         /// Sets the packed vector from a Vector4.
         /// </summary>
         /// <param name="vector">Vector containing the components.</param>
@@ -85,7 +98,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
         /// <returns>The packed vector in Vector4 format</returns>
         public Vector4 ToVector4()
         {
-            return new Vector4(ToVector3(), 1.0f);
+            return new Vector4(ToNumericsVector3(), 1.0f);
         }
 
         /// <summary>

@@ -4,6 +4,7 @@
 
 
 using System;
+using System.Numerics;
 
 namespace Microsoft.Xna.Framework.Graphics.PackedVector
 {
