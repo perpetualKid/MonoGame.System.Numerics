@@ -74,7 +74,6 @@ namespace Microsoft.Xna.Framework.Windows
                  (Screen.PrimaryScreen.WorkingArea.Height - Height) / 2);
         }
 
-        [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
         protected override void WndProc(ref Message m)
         {
             var state = TouchLocationState.Invalid;
