@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Design;
+
 using NUnit.Framework;
 using System.ComponentModel;
 using System.Globalization;
@@ -369,6 +371,7 @@ namespace MonoGame.Tests.Framework
         [Test]
         public void TypeConverter()
         {
+            TypeDescriptor.AddAttributes(typeof(Vector2), new TypeConverterAttribute(typeof(Vector2TypeConverter)));
             var converter = TypeDescriptor.GetConverter(typeof(Vector2));
             var invariantCulture = CultureInfo.InvariantCulture;
 

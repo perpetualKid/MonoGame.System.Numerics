@@ -5,6 +5,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
 {

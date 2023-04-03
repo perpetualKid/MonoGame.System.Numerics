@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
 using System.IO;
+using System.Numerics;
 
 namespace Microsoft.Xna.Framework.Content.Pipeline
 {

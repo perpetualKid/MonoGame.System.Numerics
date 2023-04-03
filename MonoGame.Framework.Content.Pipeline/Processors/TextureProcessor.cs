@@ -4,6 +4,8 @@
 
 using System;
 using System.ComponentModel;
+using System.Numerics;
+
 using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -57,7 +59,7 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Processors
                 catch (Exception ex)
                 {
                     context.Logger.LogImportantMessage("Could not convert input texture for processing. " + ex.ToString());
-                    throw ex; 
+                    throw; 
                 }
 
                 if (GenerateMipmaps)

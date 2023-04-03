@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Numerics;
+using System.Runtime.CompilerServices;
+using System.Security.Principal;
 
 namespace Microsoft.Xna.Framework
 {
@@ -13,7 +15,7 @@ namespace Microsoft.Xna.Framework
         /// <remarks>
         /// Required for OpenGL 2.0 projection matrix stuff.
         /// </remarks>
-        public static float[] ToFloatArray(in this Matrix4x4 matrix)
+        public static float[] ToFloatArray(this ref Matrix4x4 matrix)
         {
             float[] matarray = {
                                     matrix.M11, matrix.M12, matrix.M13, matrix.M14,
@@ -22,6 +24,54 @@ namespace Microsoft.Xna.Framework
                                     matrix.M41, matrix.M42, matrix.M43, matrix.M44
                                 };
             return matarray;
+        }
+
+        /// <summary>
+        /// The backward vector formed from the third row M31, M32, M33 elements.
+        /// </summary>
+        public static Vector3 Backward(this ref Matrix4x4 value)
+        {
+            return new Vector3(value.M31, value.M32, value.M33);
+        }
+
+        /// <summary>
+        /// The down vector formed from the second row -M21, -M22, -M23 elements.
+        /// </summary>
+        public static Vector3 Down(this ref Matrix4x4 value)
+        {
+            return new Vector3(-value.M21, -value.M22, -value.M23);
+        }
+
+        /// <summary>
+        /// The forward vector formed from the third row -M31, -M32, -M33 elements.
+        /// </summary>
+        public static Vector3 Forward(this ref Matrix4x4 value)
+        {
+            return new Vector3(-value.M31, -value.M32, -value.M33);
+        }
+
+        /// <summary>
+        /// The left vector formed from the first row -M11, -M12, -M13 elements.
+        /// </summary>
+        public static Vector3 Left(this ref Matrix4x4 value)
+        {
+            return new Vector3(-value.M11, -value.M12, -value.M13);
+        }
+
+        /// <summary>
+        /// The right vector formed from the first row M11, M12, M13 elements.
+        /// </summary>
+        public static Vector3 Right(this ref Matrix4x4 value)
+        {
+            return new Vector3(value.M11, value.M12, value.M13);
+        }
+
+        /// <summary>
+        /// The upper vector formed from the second row M21, M22, M23 elements.
+        /// </summary>
+        public static Vector3 Up(this ref Matrix4x4 value)
+        {
+            return new Vector3(value.M21, value.M22, value.M23);
         }
     }
 

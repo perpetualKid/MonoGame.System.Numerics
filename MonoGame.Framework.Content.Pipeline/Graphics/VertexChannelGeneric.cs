@@ -9,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Numerics;
 
 namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
 {
@@ -138,9 +139,9 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
         internal override void InsertRange(int index, IEnumerable data)
         {
             if ((index < 0) || (index > items.Count))
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
             if (data == null)
-                throw new ArgumentNullException("data");
+                throw new ArgumentNullException(nameof(data));
             if (!(data is IEnumerable<T>))
                 throw new ArgumentException("data");
             items.InsertRange(index, (IEnumerable<T>)data);

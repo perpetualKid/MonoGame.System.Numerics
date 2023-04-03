@@ -32,7 +32,7 @@ namespace MonoGame.Tests {
 #endif
             // We do all the tests using the reference device to
             // avoid driver glitches and get consistent rendering.
-            GraphicsAdapter.UseReferenceDevice = true;
+            GraphicsAdapter.UseReferenceDevice = false;
 
             Services.AddService<IFrameInfoSource>(this);
 			SuppressExtraUpdatesAndDraws = true;

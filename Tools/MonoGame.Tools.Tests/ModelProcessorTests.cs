@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
 using Microsoft.Xna.Framework.Graphics;
 using NUnit.Framework;
 using Microsoft.Xna.Framework.Content.Pipeline.Processors;
+using System.Numerics;
 
 namespace MonoGame.Tests.ContentPipeline
 {
@@ -20,16 +21,16 @@ namespace MonoGame.Tests.ContentPipeline
             {
                 Name = "Root",
                 Identity = new ContentIdentity("dummy", GetType().Name),
-                Transform = Matrix.CreateRotationZ(MathHelper.ToRadians(60)) *
-                            Matrix.CreateRotationX(MathHelper.ToRadians(40)) *
-                            Matrix.CreateRotationY(MathHelper.ToRadians(50)),
+                Transform = Matrix4x4.CreateRotationZ(MathHelper.ToRadians(60)) *
+                            Matrix4x4.CreateRotationX(MathHelper.ToRadians(40)) *
+                            Matrix4x4.CreateRotationY(MathHelper.ToRadians(50)),
             };
 
             {
                 var mesh = new MeshContent()
                 {
                     Name = "Mesh1",
-                    Transform = Matrix.Identity,
+                    Transform = Matrix4x4.Identity,
                 };
                 var geom = new GeometryContent()
                 {
@@ -43,7 +44,7 @@ namespace MonoGame.Tests.ContentPipeline
                 var mesh2 = new MeshContent()
                 {
                     Name = "Mesh2",
-                    Transform = Matrix.Identity,
+                    Transform = Matrix4x4.Identity,
                 };
                 mesh2.Positions.Add(new Vector3(0, 0, 0));
                 mesh2.Positions.Add(new Vector3(1, 0, 0));
@@ -91,9 +92,9 @@ namespace MonoGame.Tests.ContentPipeline
             var output = processor.Process(input, processorContext);
 
             // The transform the processor above is applying to the model.
-            var processorXform =    Matrix.CreateRotationZ(MathHelper.ToRadians(30))*
-                                    Matrix.CreateRotationX(MathHelper.ToRadians(10))*
-                                    Matrix.CreateRotationY(MathHelper.ToRadians(20));
+            var processorXform =    Matrix4x4.CreateRotationZ(MathHelper.ToRadians(30))*
+                                    Matrix4x4.CreateRotationX(MathHelper.ToRadians(10))*
+                                    Matrix4x4.CreateRotationY(MathHelper.ToRadians(20));
 
             // Test some basics.
             Assert.NotNull(output);
@@ -114,9 +115,9 @@ namespace MonoGame.Tests.ContentPipeline
             Assert.AreEqual("Root", output.Bones[0].Name);
             Assert.That(input.Transform, Is.EqualTo(output.Bones[0].Transform).Using(MatrixComparer.Epsilon));
             Assert.AreEqual("Mesh1", output.Bones[1].Name);
-            Assert.That(Matrix.Identity, Is.EqualTo(output.Bones[1].Transform).Using(MatrixComparer.Epsilon));
+            Assert.That(Matrix4x4.Identity, Is.EqualTo(output.Bones[1].Transform).Using(MatrixComparer.Epsilon));
             Assert.AreEqual("Mesh2", output.Bones[2].Name);
-            Assert.That(Matrix.Identity, Is.EqualTo(output.Bones[2].Transform).Using(MatrixComparer.Epsilon));
+            Assert.That(Matrix4x4.Identity, Is.EqualTo(output.Bones[2].Transform).Using(MatrixComparer.Epsilon));
 
             // Test the first mesh.
             {
@@ -256,7 +257,7 @@ namespace MonoGame.Tests.ContentPipeline
                 mesh.Geometry.Add(geom);
                 input.Children.Add(mesh);
 
-                var bone1 = new BoneContent { Name = "bone1", Transform = Matrix.CreateTranslation(0,1,0) };
+                var bone1 = new BoneContent { Name = "bone1", Transform = Matrix4x4.CreateTranslation(0,1,0) };
                 input.Children.Add(bone1);
 
                 var anim = new AnimationContent()

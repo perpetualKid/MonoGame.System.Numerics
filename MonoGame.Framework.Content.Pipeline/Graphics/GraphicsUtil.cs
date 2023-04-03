@@ -7,6 +7,7 @@ using System.IO;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
 using FreeImageAPI;
+using System.Numerics;
 
 namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
 {

@@ -3,21 +3,22 @@
 // file 'LICENSE.txt', which is part of this source code package.
 
 using System.Collections.Generic;
+using System.Numerics;
 using System.Xml;
 
 namespace Microsoft.Xna.Framework.Content.Pipeline.Serialization.Intermediate
 {
     [ContentTypeSerializer]
-    class MatrixSerializer : ElementSerializer<Matrix>
+    class MatrixSerializer : ElementSerializer<Matrix4x4>
     {
         public MatrixSerializer() :
             base("Matrix", 16)
         {
         }
 
-        protected internal override Matrix Deserialize(string[] inputs, ref int index)
+        protected internal override Matrix4x4 Deserialize(string[] inputs, ref int index)
         {
-            return new Matrix(XmlConvert.ToSingle(inputs[index++]),
+            return new Matrix4x4(XmlConvert.ToSingle(inputs[index++]),
                                 XmlConvert.ToSingle(inputs[index++]),
                                 XmlConvert.ToSingle(inputs[index++]),
                                 XmlConvert.ToSingle(inputs[index++]),
@@ -35,7 +36,7 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Serialization.Intermediate
                                 XmlConvert.ToSingle(inputs[index++]));
         }
 
-        protected internal override void Serialize(Matrix value, List<string> results)
+        protected internal override void Serialize(Matrix4x4 value, List<string> results)
         {
             results.Add(XmlConvert.ToString(value.M11));
             results.Add(XmlConvert.ToString(value.M12));

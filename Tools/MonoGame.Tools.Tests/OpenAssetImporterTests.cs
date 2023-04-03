@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
 using NUnit.Framework;
 using System.IO;
+using System.Numerics;
 
 namespace MonoGame.Tests.ContentPipeline
 {
@@ -38,8 +39,8 @@ namespace MonoGame.Tests.ContentPipeline
             Assert.NotNull(nodeContent);
             Assert.AreEqual("Cube", nodeContent.Name);
             Assert.AreEqual(0, nodeContent.Children.Count);
-            Assert.AreEqual(Matrix.Identity, nodeContent.Transform);
-            Assert.AreEqual(Matrix.Identity, nodeContent.AbsoluteTransform);
+            Assert.AreEqual(Matrix4x4.Identity, nodeContent.Transform);
+            Assert.AreEqual(Matrix4x4.Identity, nodeContent.AbsoluteTransform);
             Assert.NotNull(nodeContent.Parent);
             Assert.AreEqual("<BlenderRoot>", nodeContent.Parent.Name);
 

@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Numerics;
+
 using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
@@ -99,10 +101,10 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Processors
             // Perform the processor transforms.
             if (RotationX != 0.0f || RotationY != 0.0f || RotationZ != 0.0f || Scale != 1.0f)
             {
-                var rotX = Matrix.CreateRotationX(MathHelper.ToRadians(RotationX));
-                var rotY = Matrix.CreateRotationY(MathHelper.ToRadians(RotationY));
-                var rotZ = Matrix.CreateRotationZ(MathHelper.ToRadians(RotationZ));
-                var scale = Matrix.CreateScale(Scale);
+                var rotX = Matrix4x4.CreateRotationX(MathHelper.ToRadians(RotationX));
+                var rotY = Matrix4x4.CreateRotationY(MathHelper.ToRadians(RotationY));
+                var rotZ = Matrix4x4.CreateRotationZ(MathHelper.ToRadians(RotationZ));
+                var scale = Matrix4x4.CreateScale(Scale);
                 MeshHelper.TransformScene(input, rotZ * rotX * rotY * scale);
             }
 

@@ -7,11 +7,18 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Reflection;
+
 using Assimp;
 using Assimp.Unmanaged;
+
 using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
+
 using MonoGame.Framework.Utilities;
+
+using Matrix4x4 = System.Numerics.Matrix4x4;
+using Quaternion = System.Numerics.Quaternion;
 
 namespace Microsoft.Xna.Framework.Content.Pipeline
 {
@@ -143,24 +150,24 @@ namespace Microsoft.Xna.Framework.Content.Pipeline
         {
             public static readonly FbxPivot Default = new FbxPivot();
 
-            public Matrix? Translation;
-            public Matrix? RotationOffset;
-            public Matrix? RotationPivot;
-            public Matrix? PreRotation;
-            public Matrix? Rotation;
-            public Matrix? PostRotation;
-            public Matrix? RotationPivotInverse;
-            public Matrix? ScalingOffset;
-            public Matrix? ScalingPivot;
-            public Matrix? Scaling;
-            public Matrix? ScalingPivotInverse;
-            public Matrix? GeometricTranslation;
-            public Matrix? GeometricRotation;
-            public Matrix? GeometricScaling;
+            public Matrix4x4? Translation;
+            public Matrix4x4? RotationOffset;
+            public Matrix4x4? RotationPivot;
+            public Matrix4x4? PreRotation;
+            public Matrix4x4? Rotation;
+            public Matrix4x4? PostRotation;
+            public Matrix4x4? RotationPivotInverse;
+            public Matrix4x4? ScalingOffset;
+            public Matrix4x4? ScalingPivot;
+            public Matrix4x4? Scaling;
+            public Matrix4x4? ScalingPivotInverse;
+            public Matrix4x4? GeometricTranslation;
+            public Matrix4x4? GeometricRotation;
+            public Matrix4x4? GeometricScaling;
 
-            public Matrix GetTransform(Vector3? scale, Quaternion? rotation, Vector3? translation)
+            public Matrix4x4 GetTransform(Vector3? scale, Quaternion? rotation, Vector3? translation)
             {
-                var transform = Matrix.Identity;
+                var transform = Matrix4x4.Identity;
 
                 if (GeometricScaling.HasValue)
                     transform *= GeometricScaling.Value;
@@ -171,7 +178,7 @@ namespace Microsoft.Xna.Framework.Content.Pipeline
                 if (ScalingPivotInverse.HasValue)
                     transform *= ScalingPivotInverse.Value;
                 if (scale.HasValue)
-                    transform *= Matrix.CreateScale(scale.Value);
+                    transform *= Matrix4x4.CreateScale(scale.Value);
                 else if (Scaling.HasValue)
                     transform *= Scaling.Value;
                 if (ScalingPivot.HasValue)
@@ -183,7 +190,7 @@ namespace Microsoft.Xna.Framework.Content.Pipeline
                 if (PostRotation.HasValue)
                     transform *= PostRotation.Value;
                 if (rotation.HasValue)
-                    transform *= Matrix.CreateFromQuaternion(rotation.Value);
+                    transform *= Matrix4x4.CreateFromQuaternion(rotation.Value);
                 else if (Rotation.HasValue)
                     transform *= Rotation.Value;
                 if (PreRotation.HasValue)
@@ -193,7 +200,7 @@ namespace Microsoft.Xna.Framework.Content.Pipeline
                 if (RotationOffset.HasValue)
                     transform *= RotationOffset.Value;
                 if (translation.HasValue)
-                    transform *= Matrix.CreateTranslation(translation.Value);
+                    transform *= Matrix4x4.CreateTranslation(translation.Value);
                 else if (Translation.HasValue)
                     transform *= Translation.Value;
 
@@ -211,7 +218,7 @@ namespace Microsoft.Xna.Framework.Content.Pipeline
 
         // Assimp scene
         private Scene _scene;
-        private Dictionary<string, Matrix> _deformationBones;   // The names and offset matrices of all deformation bones.
+        private Dictionary<string, Matrix4x4> _deformationBones;   // The names and offset matrices of all deformation bones.
         private Node _rootBone;                                 // The node that represents the root bone.
         private List<Node> _bones = new List<Node>();           // All nodes attached to the root bone.
         private Dictionary<string, FbxPivot> _pivots;              // The transformation pivots.
@@ -236,7 +243,7 @@ namespace Microsoft.Xna.Framework.Content.Pipeline
         }
 
         internal OpenAssetImporter(string importerName, bool xnaCompatible)
-        {            
+        {
             _importerName = importerName;
             _xnaCompatible = xnaCompatible;
         }
@@ -325,7 +332,7 @@ namespace Microsoft.Xna.Framework.Content.Pipeline
                 if (_xnaCompatible)
                     ImportXnaMaterials();
                 else
-                    ImportMaterials();  
+                    ImportMaterials();
 
                 ImportNodes();      // Create _pivots and _rootNode (incl. children).
                 ImportSkeleton();   // Create skeleton (incl. animations) and add to _rootNode.
@@ -389,7 +396,7 @@ namespace Microsoft.Xna.Framework.Content.Pipeline
 
                 if (aiMaterial.HasShininessStrength)
                     material.SpecularPower = aiMaterial.Shininess;
-                
+
                 _materials.Add(material);
             }
         }
@@ -408,7 +415,7 @@ namespace Microsoft.Xna.Framework.Content.Pipeline
             }
 
             return texture;
-        }            
+        }
 
         /// <summary>
         /// Returns all the Assimp <see cref="Material"/> features as a <see cref="MaterialContent"/>.
@@ -488,7 +495,7 @@ namespace Microsoft.Xna.Framework.Content.Pipeline
         private void ImportNodes()
         {
             _pivots = new Dictionary<string, FbxPivot>();
-            _rootNode = ImportNodes(_scene.RootNode, null,  null);
+            _rootNode = ImportNodes(_scene.RootNode, null, null);
         }
 
         /// <summary>
@@ -544,7 +551,7 @@ namespace Microsoft.Xna.Framework.Content.Pipeline
                     _pivots.Add(originalName, pivot);
                 }
 
-                Matrix transform = ToXna(aiNode.Transform);
+                Matrix4x4 transform = ToXna(aiNode.Transform);
                 if (aiNode.Name.EndsWith("_Translation"))
                     pivot.Translation = transform;
                 else if (aiNode.Name.EndsWith("_RotationOffset"))
@@ -618,8 +625,8 @@ namespace Microsoft.Xna.Framework.Content.Pipeline
         {
             var geom = new GeometryContent
             {
-              Identity = _identity,
-              Material = _materials[aiMesh.MaterialIndex]
+                Identity = _identity,
+                Material = _materials[aiMesh.MaterialIndex]
             };
 
             // Vertices
@@ -656,14 +663,14 @@ namespace Microsoft.Xna.Framework.Content.Pipeline
                         list.Add(new BoneWeight(aiMesh.Bones[0].Name, 1));
                     }
 
-                        xnaWeights.Add(list);
+                    xnaWeights.Add(list);
                 }
 
                 if (missingBoneWeights)
                 {
                     _context.Logger.LogWarning(
-                        string.Empty, 
-                        _identity, 
+                        string.Empty,
+                        _identity,
                         "No bone weights found for one or more vertices of skinned mesh '{0}'.",
                         aiMesh.Name);
                 }
@@ -716,11 +723,11 @@ namespace Microsoft.Xna.Framework.Content.Pipeline
         /// </summary>
         /// <param name="scene">The scene.</param>
         /// <returns>A dictionary of all deformation bones and their offset matrices.</returns>
-        private static Dictionary<string, Matrix> FindDeformationBones(Scene scene)
+        private static Dictionary<string, Matrix4x4> FindDeformationBones(Scene scene)
         {
             Debug.Assert(scene != null);
 
-            var offsetMatrices = new Dictionary<string, Matrix>();
+            var offsetMatrices = new Dictionary<string, Matrix4x4>();
             if (scene.HasMeshes)
                 foreach (var mesh in scene.Meshes)
                     if (mesh.HasBones)
@@ -816,8 +823,8 @@ namespace Microsoft.Xna.Framework.Content.Pipeline
                     // Bone
                     node = new BoneContent
                     {
-                      Name = aiNode.Name,
-                      Identity = _identity
+                        Name = aiNode.Name,
+                        Identity = _identity
                     };
 
                     // node.Transform is irrelevant for bones. This transform is just the
@@ -839,13 +846,14 @@ namespace Microsoft.Xna.Framework.Content.Pipeline
                     // => bindPoseRel = bindPoseAbs * inverse(parentBindPoseAbs)
                     //                = inverse(offsetMatrix) * parentOffsetMatrix
 
-                    Matrix offsetMatrix;
-                    Matrix parentOffsetMatrix;
+                    Matrix4x4 offsetMatrix;
+                    Matrix4x4 parentOffsetMatrix;
                     bool isOffsetMatrixValid = _deformationBones.TryGetValue(aiNode.Name, out offsetMatrix);
                     bool isParentOffsetMatrixValid = _deformationBones.TryGetValue(aiParent.Name, out parentOffsetMatrix);
                     if (isOffsetMatrixValid && isParentOffsetMatrixValid)
                     {
-                        node.Transform = Matrix.Invert(offsetMatrix) * parentOffsetMatrix;
+                        Matrix4x4.Invert(offsetMatrix, out Matrix4x4 result);
+                        node.Transform = result * parentOffsetMatrix;
                     }
                     else if (isOffsetMatrixValid && aiNode == _rootBone)
                     {
@@ -860,16 +868,18 @@ namespace Microsoft.Xna.Framework.Content.Pipeline
                         else
                         {
                             // --> Let's assume that parent's transform is Identity.
-                        node.Transform = Matrix.Invert(offsetMatrix);
-                    }
+                            Matrix4x4.Invert(offsetMatrix, out Matrix4x4 result);
+                            node.Transform = result;
+                        }
                     }
                     else if (isOffsetMatrixValid && aiParent == _rootBone)
                     {
                         // The current bone is the second bone in the chain.
                         // The parent offset matrix is missing. :(
                         // --> Derive matrix from parent bone, which is the root bone.
-                        parentOffsetMatrix = Matrix.Invert(parent.Transform);
-                        node.Transform = Matrix.Invert(offsetMatrix) * parentOffsetMatrix;
+                        Matrix4x4.Invert(parent.Transform, out parentOffsetMatrix);
+                        Matrix4x4.Invert(offsetMatrix, out Matrix4x4 result);
+                        node.Transform = result * parentOffsetMatrix;
                     }
                     else
                     {
@@ -917,7 +927,7 @@ namespace Microsoft.Xna.Framework.Content.Pipeline
             //                 "nodeXyz_$AssimpFbx$_Rotation",
             //                 "nodeXyz_$AssimpFbx$_Scaling"
             // Group animation channels by name (strip the "_$AssimpFbx$" part).
-            IEnumerable < IGrouping < string,NodeAnimationChannel >> channelGroups;
+            IEnumerable<IGrouping<string, NodeAnimationChannel>> channelGroups;
             if (nodeName != null)
             {
                 channelGroups = aiAnimation.NodeAnimationChannels
@@ -1127,12 +1137,12 @@ namespace Microsoft.Xna.Framework.Content.Pipeline
         /// The relative transform. If <paramref name="ancestor"/> is <see langword="null"/> the
         /// absolute transform of <paramref name="node"/> is returned.
         /// </returns>
-        private static Matrix4x4 GetRelativeTransform(Node node, Node ancestor)
+        private static Assimp.Matrix4x4 GetRelativeTransform(Node node, Node ancestor)
         {
             Debug.Assert(node != null);
 
             // Get transform of node relative to ancestor.
-            Matrix4x4 transform = node.Transform;
+            Assimp.Matrix4x4 transform = node.Transform;
             Node parent = node.Parent;
             while (parent != null && parent != ancestor)
             {
@@ -1170,9 +1180,9 @@ namespace Microsoft.Xna.Framework.Content.Pipeline
         #region Conversion Helpers
 
         [DebuggerStepThrough]
-        public static Matrix ToXna(Matrix4x4 matrix)
+        public static Matrix4x4 ToXna(Assimp.Matrix4x4 matrix)
         {
-            var result = Matrix.Identity;
+            var result = Matrix4x4.Identity;
 
             result.M11 = matrix.A1;
             result.M12 = matrix.B1;

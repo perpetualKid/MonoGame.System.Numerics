@@ -4,6 +4,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Numerics;
+
 using Microsoft.Xna.Framework.Content.Pipeline.Processors;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
@@ -130,7 +132,7 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
                 VertexElementUsage usage;
 
                 // Try to determine the vertex format
-                if (channel.ElementType == typeof(Single))
+                if (channel.ElementType == typeof(float))
                     format = VertexElementFormat.Single;
                 else if (channel.ElementType == typeof(Vector2))
                     format = VertexElementFormat.Vector2;
@@ -201,7 +203,7 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
         public void RemoveAt(int index)
         {
             if (index < 0 || index >= VertexCount)
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
 
             positionIndices.Items.RemoveAt(index);
 
@@ -217,9 +219,9 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
         public void RemoveRange(int index, int count)
         {
             if (index < 0 || index >= VertexCount)
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
             if (count < 0 || (index+count) > VertexCount)
-                throw new ArgumentOutOfRangeException("count");
+                throw new ArgumentOutOfRangeException(nameof(count));
 
             positionIndices.RemoveRange(index, count);
 
