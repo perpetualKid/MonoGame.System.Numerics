@@ -6,12 +6,14 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+
 using MonoGame.Framework.Utilities;
+
 using SharpDX;
 using SharpDX.Direct3D;
 using SharpDX.Direct3D11;
-using SharpDX.Mathematics.Interop;
 using SharpDX.DXGI;
+using SharpDX.Mathematics.Interop;
 
 #if WINDOWS_UAP
 using Windows.UI.Xaml.Controls;
@@ -936,7 +938,7 @@ namespace Microsoft.Xna.Framework.Graphics
             return multisampleDesc;
         }
 
-        private void PlatformClear(ClearOptions options, Vector4 color, float depth, int stencil)
+        private void PlatformClear(ClearOptions options, System.Numerics.Vector4 color, float depth, int stencil)
         {
             // Clear options for depth/stencil buffer if not attached.
             if (_currentDepthStencilView != null)

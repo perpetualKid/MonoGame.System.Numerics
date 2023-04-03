@@ -3,8 +3,7 @@
 // file 'LICENSE.txt', which is part of this source code package.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Numerics;
 
 namespace Microsoft.Xna.Framework.Audio
 {
@@ -17,9 +16,9 @@ namespace Microsoft.Xna.Framework.Audio
 		public AudioEmitter ()
 		{
             _dopplerScale = 1.0f;
-			Forward = Vector3.Forward;
+			Forward = Vector3Extension.Forward;
 			Position = Vector3.Zero;
-			Up = Vector3.Up;
+			Up = Vector3.UnitY;
 			Velocity = Vector3.Zero;
 		}
 

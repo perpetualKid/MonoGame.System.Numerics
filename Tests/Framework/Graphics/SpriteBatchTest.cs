@@ -3,6 +3,8 @@
 // file 'LICENSE.txt', which is part of this source code package.
 
 using System;
+using System.Numerics;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NUnit.Framework;
@@ -30,8 +32,8 @@ namespace MonoGame.Tests.Graphics {
             {
                 VertexColorEnabled = true,
                 TextureEnabled = true,
-                View = Matrix.Identity,
-                World = Matrix.Identity
+                View = Matrix4x4.Identity,
+                World = Matrix4x4.Identity
             };
             _effect2 = content.Load<Microsoft.Xna.Framework.Graphics.Effect>(Paths.CompiledEffect("Grayscale"));            
 		}
@@ -227,12 +229,12 @@ namespace MonoGame.Tests.Graphics {
             CheckFrames();
 		}
 
-		private static readonly Matrix [] Matrices = new Matrix [] {
-			Matrix.Identity,
-			Matrix.CreateRotationZ(0.25f),
-			Matrix.CreateScale(2),
-			Matrix.CreateTranslation(30, 40, 0),
-			Matrix.CreateRotationZ(0.9f) * Matrix.CreateScale(2) * Matrix.CreateTranslation(128, 32, 0)
+		private static readonly Matrix4x4 [] Matrices = new Matrix4x4 [] {
+			Matrix4x4.Identity,
+			Matrix4x4.CreateRotationZ(0.25f),
+			Matrix4x4.CreateScale(2),
+			Matrix4x4.CreateTranslation(30, 40, 0),
+			Matrix4x4.CreateRotationZ(0.9f) * Matrix4x4.CreateScale(2) * Matrix4x4.CreateTranslation(128, 32, 0)
 		};
 
 		// Note that [Range(0, Matrices.Length -1)] is in use here,
@@ -455,15 +457,15 @@ namespace MonoGame.Tests.Graphics {
             _spriteBatch.End();
 
             // Test viewport/effect BasicEffect (Vertex & Pixel shader)
-            Matrix halfPixelOffset = Matrix.Identity;
+            Matrix4x4 halfPixelOffset = Matrix4x4.Identity;
 #if XNA 
             halfPixelOffset = Matrix.CreateTranslation(-0.5f, -0.5f, 0);
 #else // MG
             if (gd.UseHalfPixelOffset)
-                halfPixelOffset = Matrix.CreateTranslation(-0.5f, -0.5f, 0);
+                halfPixelOffset = Matrix4x4.CreateTranslation(-0.5f, -0.5f, 0);
 #endif
 
-            _effect.Projection = halfPixelOffset * Matrix.CreateOrthographicOffCenter(0, gd.Viewport.Width, gd.Viewport.Height, 0, 0, 1);
+            _effect.Projection = halfPixelOffset * Matrix4x4.CreateOrthographicOffCenter(0, gd.Viewport.Width, gd.Viewport.Height, 0, 0, 1);
             
             gd.Viewport = rvp;
             _spriteBatch.Begin(sortMode, BlendState.AlphaBlend, null, null, null, _effect);
@@ -479,7 +481,7 @@ namespace MonoGame.Tests.Graphics {
             // Test BasicEffect (Vertex & Pixel shader)
             // re-apply projection when viewport dimensions change
             gd.Viewport = rvp;
-            _effect.Projection = halfPixelOffset * Matrix.CreateOrthographicOffCenter(0, gd.Viewport.Width, gd.Viewport.Height, 0, 0, 1);
+            _effect.Projection = halfPixelOffset * Matrix4x4.CreateOrthographicOffCenter(0, gd.Viewport.Width, gd.Viewport.Height, 0, 0, 1);
             _spriteBatch.Begin(sortMode, BlendState.AlphaBlend, null, null, null, _effect);
             _spriteBatch.Draw(_texture, new Vector2(10, 210), null, Color.White);
             gd.Viewport = mvp;
@@ -487,7 +489,7 @@ namespace MonoGame.Tests.Graphics {
             gd.Viewport = lvp;
             _spriteBatch.Draw(_texture3, new Vector2(130, 210), null, Color.White);
             gd.Viewport = vp;
-            _effect.Projection = halfPixelOffset * Matrix.CreateOrthographicOffCenter(0, gd.Viewport.Width, gd.Viewport.Height, 0, 0, 1);
+            _effect.Projection = halfPixelOffset * Matrix4x4.CreateOrthographicOffCenter(0, gd.Viewport.Width, gd.Viewport.Height, 0, 0, 1);
             _spriteBatch.Draw(_texture2, new Vector2(190, 210), null, Color.White);
             _spriteBatch.End();
             

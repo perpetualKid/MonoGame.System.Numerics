@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Text;
 
 namespace Microsoft.Xna.Framework.Audio
@@ -18,9 +19,9 @@ namespace Microsoft.Xna.Framework.Audio
 	    /// </summary>
 		public AudioListener ()
 		{
-			Forward = Vector3.Forward;
+			Forward = Vector3Extension.Forward;
 			Position = Vector3.Zero;
-			Up = Vector3.Up;
+			Up = Vector3.UnitY;
 			Velocity = Vector3.Zero;
 		}
 

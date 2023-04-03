@@ -4,6 +4,7 @@
 
 using System;
 using System.IO;
+using System.Numerics;
 
 namespace Microsoft.Xna.Framework.Audio
 {

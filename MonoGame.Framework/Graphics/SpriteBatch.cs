@@ -3,6 +3,7 @@
 // file 'LICENSE.txt', which is part of this source code package.
 
 using System;
+using System.Numerics;
 using System.Text;
 
 namespace Microsoft.Xna.Framework.Graphics
@@ -84,7 +85,7 @@ namespace Microsoft.Xna.Framework.Graphics
              DepthStencilState depthStencilState = null,
              RasterizerState rasterizerState = null,
              Effect effect = null,
-             Matrix? transformMatrix = null
+             Matrix4x4? transformMatrix = null
         )
         {
             if (_beginCalled)
@@ -723,7 +724,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 }
             }
             
-            Matrix transformation = Matrix.Identity;
+            Matrix4x4 transformation = Matrix4x4.Identity;
             float cos = 0, sin = 0;
             if (rotation == 0)
             {
@@ -789,7 +790,7 @@ namespace Microsoft.Xna.Framework.Graphics
                     p.Y += pCurrentGlyph->BoundsInTexture.Height - spriteFont.LineSpacing;
                 p.Y += pCurrentGlyph->Cropping.Y;
 
-                Vector2.Transform(ref p, ref transformation, out p);
+                p = Vector2.Transform(p, transformation);
 
                 var item = _batcher.CreateBatchItem();               
                 item.Texture = spriteFont.Texture;
@@ -908,7 +909,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 }
             }
 
-            Matrix transformation = Matrix.Identity;
+            Matrix4x4 transformation = Matrix4x4.Identity;
             float cos = 0, sin = 0;
             if (rotation == 0)
             {
@@ -974,7 +975,7 @@ namespace Microsoft.Xna.Framework.Graphics
                         p.Y += pCurrentGlyph->BoundsInTexture.Height - spriteFont.LineSpacing;
                     p.Y += pCurrentGlyph->Cropping.Y;
 
-                    Vector2.Transform(ref p, ref transformation, out p);
+                    p = Vector2.Transform(p, transformation);
 
                     var item = _batcher.CreateBatchItem();
                     item.Texture = spriteFont.Texture;
@@ -1190,7 +1191,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 }
             }
             
-            Matrix transformation = Matrix.Identity;
+            Matrix4x4 transformation = Matrix4x4.Identity;
             float cos = 0, sin = 0;
             if (rotation == 0)
             {
@@ -1256,7 +1257,7 @@ namespace Microsoft.Xna.Framework.Graphics
                     p.Y += pCurrentGlyph->BoundsInTexture.Height - spriteFont.LineSpacing;
                 p.Y += pCurrentGlyph->Cropping.Y;
 
-                Vector2.Transform(ref p, ref transformation, out p);
+                p = Vector2.Transform(p, transformation);
                 
                 var item = _batcher.CreateBatchItem();               
                 item.Texture = spriteFont.Texture;
@@ -1375,7 +1376,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 }
             }
 
-            Matrix transformation = Matrix.Identity;
+            Matrix4x4 transformation = Matrix4x4.Identity;
             float cos = 0, sin = 0;
             if (rotation == 0)
             {
@@ -1441,7 +1442,7 @@ namespace Microsoft.Xna.Framework.Graphics
                         p.Y += pCurrentGlyph->BoundsInTexture.Height - spriteFont.LineSpacing;
                     p.Y += pCurrentGlyph->Cropping.Y;
 
-                    Vector2.Transform(ref p, ref transformation, out p);
+                    p = Vector2.Transform(p, transformation);
 
                     var item = _batcher.CreateBatchItem();
                     item.Texture = spriteFont.Texture;

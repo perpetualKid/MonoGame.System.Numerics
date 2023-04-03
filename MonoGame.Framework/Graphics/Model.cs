@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace Microsoft.Xna.Framework.Graphics
 {
@@ -12,7 +13,7 @@ namespace Microsoft.Xna.Framework.Graphics
     /// </summary>
 	public sealed class Model
 	{
-		private static Matrix[] sharedDrawBoneMatrices;
+		private static Matrix4x4[] sharedDrawBoneMatrices;
 		
 		private GraphicsDevice graphicsDevice;
 
@@ -66,7 +67,7 @@ namespace Microsoft.Xna.Framework.Graphics
 		{
             if (graphicsDevice == null)
             {
-                throw new ArgumentNullException("graphicsDevice", FrameworkResources.ResourceCreationWhenDeviceIsNull);
+                throw new ArgumentNullException(nameof(graphicsDevice), FrameworkResources.ResourceCreationWhenDeviceIsNull);
             }
 
 			// TODO: Complete member initialization
@@ -78,7 +79,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
         internal void BuildHierarchy()
 		{
-			var globalScale = Matrix.CreateScale(0.01f);
+			var globalScale = Matrix4x4.CreateScale(0.01f);
 			
 			foreach(var node in this.Root.Children)
 			{
@@ -86,7 +87,7 @@ namespace Microsoft.Xna.Framework.Graphics
 			}
 		}
 		
-		private void BuildHierarchy(ModelBone node, Matrix parentTransform, int level)
+		private void BuildHierarchy(ModelBone node, Matrix4x4 parentTransform, int level)
 		{
 			node.ModelTransform = node.Transform * parentTransform;
 			
@@ -111,14 +112,14 @@ namespace Microsoft.Xna.Framework.Graphics
         /// <param name="world">The world transform.</param>
         /// <param name="view">The view transform.</param>
         /// <param name="projection">The projection transform.</param>
-        public void Draw(Matrix world, Matrix view, Matrix projection) 
+        public void Draw(Matrix4x4 world, Matrix4x4 view, Matrix4x4 projection) 
 		{       
             int boneCount = this.Bones.Count;
 			
 			if (sharedDrawBoneMatrices == null ||
 				sharedDrawBoneMatrices.Length < boneCount)
 			{
-				sharedDrawBoneMatrices = new Matrix[boneCount];    
+				sharedDrawBoneMatrices = new Matrix4x4[boneCount];    
 			}
 			
 			// Look up combined bone matrices for the entire model.            
@@ -146,12 +147,12 @@ namespace Microsoft.Xna.Framework.Graphics
         /// Copies bone transforms relative to all parent bones of the each bone from this model to a given array.
         /// </summary>
         /// <param name="destinationBoneTransforms">The array receiving the transformed bones.</param>
-        public void CopyAbsoluteBoneTransformsTo(Matrix[] destinationBoneTransforms)
+        public void CopyAbsoluteBoneTransformsTo(Matrix4x4[] destinationBoneTransforms)
 		{
 			if (destinationBoneTransforms == null)
-				throw new ArgumentNullException("destinationBoneTransforms");
+				throw new ArgumentNullException(nameof(destinationBoneTransforms));
             if (destinationBoneTransforms.Length < this.Bones.Count)
-				throw new ArgumentOutOfRangeException("destinationBoneTransforms");
+				throw new ArgumentOutOfRangeException(nameof(destinationBoneTransforms));
             int count = this.Bones.Count;
 			for (int index1 = 0; index1 < count; ++index1)
 			{
@@ -163,7 +164,7 @@ namespace Microsoft.Xna.Framework.Graphics
 				else
 				{
 					int index2 = modelBone.Parent.Index;
-					Matrix.Multiply(ref modelBone.transform, ref destinationBoneTransforms[index2], out destinationBoneTransforms[index1]);
+					destinationBoneTransforms[index1] = Matrix4x4.Multiply(modelBone.transform, destinationBoneTransforms[index2]);
 				}
 			}
 		}
@@ -178,12 +179,12 @@ namespace Microsoft.Xna.Framework.Graphics
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="sourceBoneTransforms"/> is invalid.
         /// </exception>
-        public void CopyBoneTransformsFrom(Matrix[] sourceBoneTransforms)
+        public void CopyBoneTransformsFrom(Matrix4x4[] sourceBoneTransforms)
         {
             if (sourceBoneTransforms == null)
-                throw new ArgumentNullException("sourceBoneTransforms");
+                throw new ArgumentNullException(nameof(sourceBoneTransforms));
             if (sourceBoneTransforms.Length < Bones.Count)
-                throw new ArgumentOutOfRangeException("sourceBoneTransforms");
+                throw new ArgumentOutOfRangeException(nameof(sourceBoneTransforms));
 
             int count = Bones.Count;
             for (int i = 0; i < count; i++)
@@ -202,12 +203,12 @@ namespace Microsoft.Xna.Framework.Graphics
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="destinationBoneTransforms"/> is invalid.
         /// </exception>
-        public void CopyBoneTransformsTo(Matrix[] destinationBoneTransforms)
+        public void CopyBoneTransformsTo(Matrix4x4[] destinationBoneTransforms)
         {
             if (destinationBoneTransforms == null)
-                throw new ArgumentNullException("destinationBoneTransforms");
+                throw new ArgumentNullException(nameof(destinationBoneTransforms));
             if (destinationBoneTransforms.Length < Bones.Count)
-                throw new ArgumentOutOfRangeException("destinationBoneTransforms");
+                throw new ArgumentOutOfRangeException(nameof(destinationBoneTransforms));
 
             int count = Bones.Count;
             for (int i = 0; i < count; i++)

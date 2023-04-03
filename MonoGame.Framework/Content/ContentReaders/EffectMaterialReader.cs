@@ -5,6 +5,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Numerics;
+
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Framework.Utilities;
 
@@ -61,11 +63,11 @@ namespace Microsoft.Xna.Framework.Content
 					else if (ReflectionHelpers.IsAssignableFromType(typeof(Vector4 []), itemType)) {
 						parameter.SetValue((Vector4 []) item.Value);
 					}
-					else if (ReflectionHelpers.IsAssignableFromType(typeof(Matrix), itemType)) {
-						parameter.SetValue((Matrix) item.Value);
+					else if (ReflectionHelpers.IsAssignableFromType(typeof(Matrix4x4), itemType)) {
+						parameter.SetValue((Matrix4x4) item.Value);
 					}
-					else if (ReflectionHelpers.IsAssignableFromType(typeof(Matrix []), itemType)) {
-						parameter.SetValue((Matrix[]) item.Value);
+					else if (ReflectionHelpers.IsAssignableFromType(typeof(Matrix4x4 []), itemType)) {
+						parameter.SetValue((Matrix4x4[]) item.Value);
 					}
 					else if (ReflectionHelpers.IsAssignableFromType(typeof(Quaternion), itemType)) {
 						parameter.SetValue((Quaternion) item.Value);

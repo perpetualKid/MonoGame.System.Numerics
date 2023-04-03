@@ -3,17 +3,20 @@
 // file 'LICENSE.txt', which is part of this source code package.
 
 using System;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
+
 using Microsoft.Xna.Framework.Input.Touch;
+
 using MonoGame.Framework;
 
 
 namespace Microsoft.Xna.Framework.Windows
 {
     internal static class MessageExtensions
-    {     
+    {
         public static int GetPointerId(this Message msg)
         {
             return (short)msg.WParam;
@@ -24,10 +27,10 @@ namespace Microsoft.Xna.Framework.Windows
             var lowword = msg.LParam.ToInt32();
 
             return new System.Drawing.Point()
-                       {
-                           X = (short)(lowword),
-                           Y = (short)(lowword >> 16),
-                       };
+            {
+                X = (short)(lowword),
+                Y = (short)(lowword >> 16),
+            };
         }
     }
 
@@ -69,9 +72,9 @@ namespace Microsoft.Xna.Framework.Windows
 
         public void CenterOnPrimaryMonitor()
         {
-             Location = new System.Drawing.Point(
-                 (Screen.PrimaryScreen.WorkingArea.Width  - Width ) / 2,
-                 (Screen.PrimaryScreen.WorkingArea.Height - Height) / 2);
+            Location = new System.Drawing.Point(
+                (Screen.PrimaryScreen.WorkingArea.Width - Width) / 2,
+                (Screen.PrimaryScreen.WorkingArea.Height - Height) / 2);
         }
 
         protected override void WndProc(ref Message m)
@@ -151,7 +154,8 @@ namespace Microsoft.Xna.Framework.Windows
                     state = TouchLocationState.Moved;
                     break;
                 case WM_MOUSEHWHEEL:
-                    var delta = (short)(((ulong)m.WParam >> 16) & 0xffff); ;
+                    var delta = (short)(((ulong)m.WParam >> 16) & 0xffff);
+                    ;
                     var handler = MouseHorizontalWheel;
 
                     if (handler != null)
@@ -230,8 +234,7 @@ namespace Microsoft.Xna.Framework.Windows
             m.Result = IntPtr.Zero;
         }
 
-        private static Microsoft.Xna.Framework.Input.Keys KeyCodeTranslate(
-            System.Windows.Forms.Keys keyCode, bool extended, long scancode)
+        private static Input.Keys KeyCodeTranslate(Keys keyCode, bool extended, long scancode)
         {
             switch (keyCode)
             {

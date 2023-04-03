@@ -8,9 +8,7 @@
 #endregion
 
 #region Using Statements
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+using System.Numerics;
 #endregion
 
 namespace Microsoft.Xna.Framework.Graphics
@@ -36,11 +34,11 @@ namespace Microsoft.Xna.Framework.Graphics
         bool fogEnabled;
         bool vertexColorEnabled;
 
-        Matrix world = Matrix.Identity;
-        Matrix view = Matrix.Identity;
-        Matrix projection = Matrix.Identity;
+        Matrix4x4 world = Matrix4x4.Identity;
+        Matrix4x4 view = Matrix4x4.Identity;
+        Matrix4x4 projection = Matrix4x4.Identity;
 
-        Matrix worldView;
+        Matrix4x4 worldView;
 
         Vector3 diffuseColor = Vector3.One;
 
@@ -63,7 +61,7 @@ namespace Microsoft.Xna.Framework.Graphics
         /// <summary>
         /// Gets or sets the world matrix.
         /// </summary>
-        public Matrix World
+        public Matrix4x4 World
         {
             get { return world; }
             
@@ -78,7 +76,7 @@ namespace Microsoft.Xna.Framework.Graphics
         /// <summary>
         /// Gets or sets the view matrix.
         /// </summary>
-        public Matrix View
+        public Matrix4x4 View
         {
             get { return view; }
             
@@ -93,7 +91,7 @@ namespace Microsoft.Xna.Framework.Graphics
         /// <summary>
         /// Gets or sets the projection matrix.
         /// </summary>
-        public Matrix Projection
+        public Matrix4x4 Projection
         {
             get { return projection; }
             

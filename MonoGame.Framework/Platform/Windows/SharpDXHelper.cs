@@ -5,6 +5,8 @@
 namespace Microsoft.Xna.Framework
 {
     using System;
+    using System.Numerics;
+
     using Graphics;
     using SharpDX.Mathematics.Interop;
 

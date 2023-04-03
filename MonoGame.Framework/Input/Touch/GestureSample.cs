@@ -40,6 +40,7 @@
 
 using Microsoft.Xna.Framework;
 using System;
+using System.Numerics;
 
 namespace Microsoft.Xna.Framework.Input.Touch
 {

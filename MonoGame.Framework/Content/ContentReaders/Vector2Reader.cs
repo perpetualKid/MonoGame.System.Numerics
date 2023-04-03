@@ -2,13 +2,11 @@
 // This file is subject to the terms and conditions defined in
 // file 'LICENSE.txt', which is part of this source code package.
 
-using System;
-
-using Microsoft.Xna.Framework.Content;
+using System.Numerics;
 
 namespace Microsoft.Xna.Framework.Content
 {
-	internal class Vector2Reader : ContentTypeReader<Vector2>
+    internal class Vector2Reader : ContentTypeReader<Vector2>
 	{
 		public Vector2Reader ()
 		{

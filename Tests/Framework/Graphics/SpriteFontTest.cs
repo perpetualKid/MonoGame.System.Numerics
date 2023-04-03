@@ -67,6 +67,7 @@ non-infringement.
 #endregion License
 
 using System;
+using System.Numerics;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

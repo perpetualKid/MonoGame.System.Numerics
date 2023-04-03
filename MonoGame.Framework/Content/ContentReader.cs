@@ -5,6 +5,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Numerics;
+
 using MonoGame.Framework.Utilities;
 
 namespace Microsoft.Xna.Framework.Content
@@ -105,7 +107,7 @@ namespace Microsoft.Xna.Framework.Content
         {
             var externalReference = ReadString();
 
-            if (!String.IsNullOrEmpty(externalReference))
+            if (!string.IsNullOrEmpty(externalReference))
             {
                 return contentManager.Load<T>(FileHelpers.ResolveRelativePath(assetName, externalReference));
             }
@@ -113,25 +115,27 @@ namespace Microsoft.Xna.Framework.Content
             return default(T);
         }
 
-        public Matrix ReadMatrix()
+        public Matrix4x4 ReadMatrix()
         {
-            Matrix result = new Matrix();
-            result.M11 = ReadSingle();
-            result.M12 = ReadSingle();
-            result.M13 = ReadSingle();
-            result.M14 = ReadSingle(); 
-            result.M21 = ReadSingle();
-            result.M22 = ReadSingle();
-            result.M23 = ReadSingle();
-            result.M24 = ReadSingle();
-            result.M31 = ReadSingle();
-            result.M32 = ReadSingle();
-            result.M33 = ReadSingle();
-            result.M34 = ReadSingle();
-            result.M41 = ReadSingle();
-            result.M42 = ReadSingle();
-            result.M43 = ReadSingle();
-            result.M44 = ReadSingle();
+            Matrix4x4 result = new Matrix4x4
+            {
+                M11 = ReadSingle(),
+                M12 = ReadSingle(),
+                M13 = ReadSingle(),
+                M14 = ReadSingle(),
+                M21 = ReadSingle(),
+                M22 = ReadSingle(),
+                M23 = ReadSingle(),
+                M24 = ReadSingle(),
+                M31 = ReadSingle(),
+                M32 = ReadSingle(),
+                M33 = ReadSingle(),
+                M34 = ReadSingle(),
+                M41 = ReadSingle(),
+                M42 = ReadSingle(),
+                M43 = ReadSingle(),
+                M44 = ReadSingle()
+            };
             return result;
         }
             
@@ -195,22 +199,24 @@ namespace Microsoft.Xna.Framework.Content
 
         public Quaternion ReadQuaternion()
         {
-            Quaternion result = new Quaternion();
-            result.X = ReadSingle();
-            result.Y = ReadSingle();
-            result.Z = ReadSingle();
-            result.W = ReadSingle();
+            Quaternion result = new Quaternion
+            {
+                X = ReadSingle(),
+                Y = ReadSingle(),
+                Z = ReadSingle(),
+                W = ReadSingle()
+            };
             return result;
         }
 
         public T ReadRawObject<T>()
         {
-			return (T)ReadRawObject<T> (default(T));
+			return ReadRawObject<T>(default(T));
         }
 
         public T ReadRawObject<T>(ContentTypeReader typeReader)
         {
-            return (T)ReadRawObject<T>(typeReader, default(T));
+            return ReadRawObject<T>(typeReader, default(T));
         }
 
         public T ReadRawObject<T>(T existingInstance)
@@ -219,7 +225,7 @@ namespace Microsoft.Xna.Framework.Content
             foreach(ContentTypeReader typeReader in typeReaders)
             {
                 if(typeReader.TargetType == objectType)
-                    return (T)ReadRawObject<T>(typeReader,existingInstance);
+                    return ReadRawObject<T>(typeReader, existingInstance);
             }
             throw new NotSupportedException();
         }
@@ -238,7 +244,7 @@ namespace Microsoft.Xna.Framework.Content
                     {
                         if (!(v is T))
                         {
-                            throw new ContentLoadException(String.Format("Error loading shared resource. Expected type {0}, received type {1}", typeof(T).Name, v.GetType().Name));
+                            throw new ContentLoadException(string.Format("Error loading shared resource. Expected type {0}, received type {1}", typeof(T).Name, v.GetType().Name));
                         }
                         fixup((T)v);
                     }));
@@ -247,38 +253,46 @@ namespace Microsoft.Xna.Framework.Content
 
         public Vector2 ReadVector2()
         {
-            Vector2 result = new Vector2();
-            result.X = ReadSingle();
-            result.Y = ReadSingle();
+            Vector2 result = new Vector2
+            {
+                X = ReadSingle(),
+                Y = ReadSingle()
+            };
             return result;
         }
 
         public Vector3 ReadVector3()
         {
-            Vector3 result = new Vector3();
-            result.X = ReadSingle();
-            result.Y = ReadSingle();
-            result.Z = ReadSingle();
+            Vector3 result = new Vector3
+            {
+                X = ReadSingle(),
+                Y = ReadSingle(),
+                Z = ReadSingle()
+            };
             return result;
         }
 
         public Vector4 ReadVector4()
         {
-            Vector4 result = new Vector4();
-            result.X = ReadSingle();
-            result.Y = ReadSingle();
-            result.Z = ReadSingle();
-            result.W = ReadSingle();
+            Vector4 result = new Vector4
+            {
+                X = ReadSingle(),
+                Y = ReadSingle(),
+                Z = ReadSingle(),
+                W = ReadSingle()
+            };
             return result;
         }
 
         public Color ReadColor()
         {
-            Color result = new Color();
-            result.R = ReadByte();
-            result.G = ReadByte();
-            result.B = ReadByte();
-            result.A = ReadByte();
+            Color result = new Color
+            {
+                R = ReadByte(),
+                G = ReadByte(),
+                B = ReadByte(),
+                A = ReadByte()
+            };
             return result;
         }
 

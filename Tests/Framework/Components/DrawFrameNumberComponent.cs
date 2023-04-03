@@ -66,16 +66,14 @@ non-infringement.
 */
 #endregion License
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Numerics;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MonoGame.Tests.Components {
-	class DrawFrameNumberComponent : DrawableGameComponent {
+namespace MonoGame.Tests.Components
+{
+    class DrawFrameNumberComponent : DrawableGameComponent {
 		private SpriteBatch _batch;
 		private SpriteFont _font;
 

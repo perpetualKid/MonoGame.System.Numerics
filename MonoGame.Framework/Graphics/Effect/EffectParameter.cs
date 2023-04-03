@@ -1,7 +1,7 @@
 using System;
-using System.Linq;
-using System.Text;
 using System.Diagnostics;
+using System.Linq;
+using System.Numerics;
 
 namespace Microsoft.Xna.Framework.Graphics
 {
@@ -224,7 +224,7 @@ namespace Microsoft.Xna.Framework.Graphics
             }
         }
 
-		public Matrix GetValueMatrix ()
+		public Matrix4x4 GetValueMatrix ()
 		{
             if (ParameterClass != EffectParameterClass.Matrix || ParameterType != EffectParameterType.Single)
                 throw new InvalidCastException();
@@ -234,18 +234,18 @@ namespace Microsoft.Xna.Framework.Graphics
 
             var floatData = (float[])Data;
 
-            return new Matrix(  floatData[0], floatData[4], floatData[8], floatData[12],
+            return new Matrix4x4(  floatData[0], floatData[4], floatData[8], floatData[12],
                                 floatData[1], floatData[5], floatData[9], floatData[13],
                                 floatData[2], floatData[6], floatData[10], floatData[14],
                                 floatData[3], floatData[7], floatData[11], floatData[15]);
 		}
         
-		public Matrix[] GetValueMatrixArray (int count)
+		public Matrix4x4[] GetValueMatrixArray (int count)
 		{
             if (ParameterClass != EffectParameterClass.Matrix || ParameterType != EffectParameterType.Single)
                 throw new InvalidCastException();
 
-            var ret = new Matrix[count];
+            var ret = new Matrix4x4[count];
             for (var i = 0; i < count; i++)
                 ret[i] = Elements[i].GetValueMatrix();
 
@@ -268,7 +268,7 @@ namespace Microsoft.Xna.Framework.Graphics
 		}
         */
 
-		public Single GetValueSingle ()
+		public float GetValueSingle ()
 		{
             // TODO: Should this fetch int and bool as a float?
             if (ParameterClass != EffectParameterClass.Scalar || ParameterType != EffectParameterType.Single)
@@ -277,11 +277,11 @@ namespace Microsoft.Xna.Framework.Graphics
 			return ((float[])Data)[0];
 		}
 
-		public Single[] GetValueSingleArray ()
+		public float[] GetValueSingleArray ()
 		{
 			if (Elements != null && Elements.Count > 0)
             {
-                var ret = new Single[RowCount * ColumnCount * Elements.Count];
+                var ret = new float[RowCount * ColumnCount * Elements.Count];
 				for (int i=0; i<Elements.Count; i++)
                 {
                     var elmArray = Elements[i].GetValueSingleArray();
@@ -294,11 +294,11 @@ namespace Microsoft.Xna.Framework.Graphics
 			switch(ParameterClass) 
             {
 			case EffectParameterClass.Scalar:
-				return new Single[] { GetValueSingle () };
+				return new float[] { GetValueSingle () };
             case EffectParameterClass.Vector:
 			case EffectParameterClass.Matrix:
-                    if (Data is Matrix)
-                        return Matrix.ToFloatArray((Matrix)Data);
+                    if (Data is Matrix4x4 matrix4)
+                        return matrix4.ToFloatArray();
                     else
                         return (float[])Data;
 			default:
@@ -472,7 +472,7 @@ namespace Microsoft.Xna.Framework.Graphics
             StateKey = unchecked(NextStateKey++);
         }
 
-        public void SetValue(Matrix value)
+        public void SetValue(Matrix4x4 value)
         {
             if (ParameterClass != EffectParameterClass.Matrix || ParameterType != EffectParameterType.Single)
                 throw new InvalidCastException();
@@ -574,7 +574,7 @@ namespace Microsoft.Xna.Framework.Graphics
             StateKey = unchecked(NextStateKey++);
         }
 
-		public void SetValueTranspose(Matrix value)
+		public void SetValueTranspose(Matrix4x4 value)
 		{
             if (ParameterClass != EffectParameterClass.Matrix || ParameterType != EffectParameterType.Single)
                 throw new InvalidCastException();
@@ -676,7 +676,7 @@ namespace Microsoft.Xna.Framework.Graphics
 			StateKey = unchecked(NextStateKey++);
 		}
 
-		public void SetValue (Matrix[] value)
+		public void SetValue (Matrix4x4[] value)
 		{
             if (ParameterClass != EffectParameterClass.Matrix || ParameterType != EffectParameterType.Single)
                 throw new InvalidCastException();
@@ -811,7 +811,7 @@ namespace Microsoft.Xna.Framework.Graphics
 		}
         */
 
-		public void SetValue (Single value)
+		public void SetValue (float value)
 		{
             if (ParameterType != EffectParameterType.Single)
                 throw new InvalidCastException();
@@ -819,7 +819,7 @@ namespace Microsoft.Xna.Framework.Graphics
             StateKey = unchecked(NextStateKey++);
 		}
 
-		public void SetValue (Single[] value)
+		public void SetValue (float[] value)
 		{
 			for (var i=0; i<value.Length; i++)
 				Elements[i].SetValue (value[i]);

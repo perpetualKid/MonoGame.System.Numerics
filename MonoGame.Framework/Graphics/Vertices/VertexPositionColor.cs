@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 using System.Runtime.InteropServices;
+using System.Numerics;
 
 namespace Microsoft.Xna.Framework.Graphics
 {

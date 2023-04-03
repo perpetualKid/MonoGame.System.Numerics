@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Numerics;
 using System.Runtime.Serialization;
 
 namespace Microsoft.Xna.Framework
@@ -39,7 +40,7 @@ namespace Microsoft.Xna.Framework
             get
             {
                 return string.Concat(
-                    "Center( ", this.Center.DebugDisplayString, " )  \r\n",
+                    "Center( ", this.Center.DebugDisplayString(), " )  \r\n",
                     "Radius( ", this.Radius.ToString(), " )"
                     );
             }
@@ -187,8 +188,7 @@ namespace Microsoft.Xna.Framework
         /// <param name="result">The containment type as an output parameter.</param>
         public void Contains(ref BoundingSphere sphere, out ContainmentType result)
         {
-            float sqDistance;
-            Vector3.DistanceSquared(ref sphere.Center, ref Center, out sqDistance);
+            float sqDistance = Vector3.DistanceSquared(sphere.Center, Center);
 
             if (sqDistance > (sphere.Radius + Radius) * (sphere.Radius + Radius))
                 result = ContainmentType.Disjoint;
@@ -220,8 +220,7 @@ namespace Microsoft.Xna.Framework
         public void Contains(ref Vector3 point, out ContainmentType result)
         {
             float sqRadius = Radius * Radius;
-            float sqDistance;
-            Vector3.DistanceSquared(ref point, ref Center, out sqDistance);
+            float sqDistance = Vector3.DistanceSquared(point, Center);
             
             if (sqDistance > sqRadius)
                 result = ContainmentType.Disjoint;
@@ -497,8 +496,7 @@ namespace Microsoft.Xna.Framework
         /// <param name="result"><c>true</c> if other <see cref="BoundingSphere"/> intersects with this sphere; <c>false</c> otherwise. As an output parameter.</param>
         public void Intersects(ref BoundingSphere sphere, out bool result)
         {
-            float sqDistance;
-            Vector3.DistanceSquared(ref sphere.Center, ref Center, out sqDistance);
+            float sqDistance = Vector3.DistanceSquared(sphere.Center, Center);
 
             if (sqDistance > (sphere.Radius + Radius) * (sphere.Radius + Radius))
                 result = false;
@@ -526,9 +524,8 @@ namespace Microsoft.Xna.Framework
         /// <param name="result">Type of intersection as an output parameter.</param>
         public void Intersects(ref Plane plane, out PlaneIntersectionType result)
         {
-            var distance = default(float);
             // TODO: we might want to inline this for performance reasons
-            Vector3.Dot(ref plane.Normal, ref this.Center, out distance);
+            float distance = Vector3.Dot(plane.Normal, Center);
             distance += plane.D;
             if (distance > this.Radius)
                 result = PlaneIntersectionType.Front;
@@ -577,12 +574,13 @@ namespace Microsoft.Xna.Framework
         /// </summary>
         /// <param name="matrix">The transformation <see cref="Matrix"/>.</param>
         /// <returns>Transformed <see cref="BoundingSphere"/>.</returns>
-        public BoundingSphere Transform(Matrix matrix)
+        public BoundingSphere Transform(Matrix4x4 matrix)
         {
-            BoundingSphere sphere = new BoundingSphere();
-            sphere.Center = Vector3.Transform(this.Center, matrix);
-            sphere.Radius = this.Radius * MathF.Sqrt(Math.Max(((matrix.M11 * matrix.M11) + (matrix.M12 * matrix.M12)) + (matrix.M13 * matrix.M13), Math.Max(((matrix.M21 * matrix.M21) + (matrix.M22 * matrix.M22)) + (matrix.M23 * matrix.M23), ((matrix.M31 * matrix.M31) + (matrix.M32 * matrix.M32)) + (matrix.M33 * matrix.M33))));
-            return sphere;
+            return new BoundingSphere
+            {
+                Center = Vector3.Transform(this.Center, matrix),
+                Radius = this.Radius * MathF.Sqrt(Math.Max(((matrix.M11 * matrix.M11) + (matrix.M12 * matrix.M12)) + (matrix.M13 * matrix.M13), Math.Max(((matrix.M21 * matrix.M21) + (matrix.M22 * matrix.M22)) + (matrix.M23 * matrix.M23), ((matrix.M31 * matrix.M31) + (matrix.M32 * matrix.M32)) + (matrix.M33 * matrix.M33))))
+            };
         }
 
         /// <summary>
@@ -590,7 +588,7 @@ namespace Microsoft.Xna.Framework
         /// </summary>
         /// <param name="matrix">The transformation <see cref="Matrix"/>.</param>
         /// <param name="result">Transformed <see cref="BoundingSphere"/> as an output parameter.</param>
-        public void Transform(ref Matrix matrix, out BoundingSphere result)
+        public void Transform(ref Matrix4x4 matrix, out BoundingSphere result)
         {
             result.Center = Vector3.Transform(this.Center, matrix);
             result.Radius = this.Radius * MathF.Sqrt(Math.Max(((matrix.M11 * matrix.M11) + (matrix.M12 * matrix.M12)) + (matrix.M13 * matrix.M13), Math.Max(((matrix.M21 * matrix.M21) + (matrix.M22 * matrix.M22)) + (matrix.M23 * matrix.M23), ((matrix.M31 * matrix.M31) + (matrix.M32 * matrix.M32)) + (matrix.M33 * matrix.M33))));

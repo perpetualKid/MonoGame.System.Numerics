@@ -40,12 +40,12 @@
 //
 // Author: Kenneth James Pouncey
 
-using System;
+using System.Numerics;
 
 namespace Microsoft.Xna.Framework.Graphics.PackedVector
 {
-	// http://msdn.microsoft.com/en-us/library/microsoft.xna.framework.graphics.packedvector.ipackedvector.aspx
-	public interface IPackedVector
+    // http://msdn.microsoft.com/en-us/library/microsoft.xna.framework.graphics.packedvector.ipackedvector.aspx
+    public interface IPackedVector
 	{
 		void PackFromVector4 (Vector4 vector);
 

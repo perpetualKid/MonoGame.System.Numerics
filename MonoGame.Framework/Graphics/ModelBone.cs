@@ -1,13 +1,12 @@
-﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Numerics;
 
 namespace Microsoft.Xna.Framework.Graphics
 {
-	// Summary:
-	//     Represents bone data for a model. Reference page contains links to related
-	//     conceptual articles.
-	public sealed class ModelBone
+    // Summary:
+    //     Represents bone data for a model. Reference page contains links to related
+    //     conceptual articles.
+    public sealed class ModelBone
 	{
 		private List<ModelBone> children = new List<ModelBone>();
 		
@@ -41,8 +40,8 @@ namespace Microsoft.Xna.Framework.Graphics
 		// Summary:
 		//     Gets or sets the matrix used to transform this bone relative to its parent
 		//     bone.
-		internal Matrix transform;
-		public Matrix Transform 
+		internal Matrix4x4 transform;
+		public Matrix4x4 Transform 
 		{ 
 			get { return this.transform; } 
 			set { this.transform = value; }
@@ -51,7 +50,7 @@ namespace Microsoft.Xna.Framework.Graphics
 		/// <summary>
 		/// Transform of this node from the root of the model not from the parent
 		/// </summary>
-		public Matrix ModelTransform {
+		public Matrix4x4 ModelTransform {
 			get;
 			set;
 		}

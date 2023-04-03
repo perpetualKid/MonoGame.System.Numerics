@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using System.ComponentModel;
 using System.Globalization;
+using System.Numerics;
 
 namespace MonoGame.Tests.Framework
 {
@@ -70,12 +71,11 @@ namespace MonoGame.Tests.Framework
         {
             var vector1 = new Vector4(1, 2, 3, 4);
             var vector2 = new Vector4(0.5f, 1.1f, -3.8f, 1.2f);
-            var expectedResult = -3.89999962f;
+            var expectedResult = -3.89999938f;
 
             Assert.AreEqual(expectedResult, Vector4.Dot(vector1, vector2));
 
-            float result;
-            Vector4.Dot(ref vector1, ref vector2, out result);
+            float result = Vector4.Dot(vector1, vector2);
 
             Assert.AreEqual(expectedResult, result);
         }
@@ -89,7 +89,7 @@ namespace MonoGame.Tests.Framework
             var v2 = new Vector4(-1.3f,0.1f,30.0f,365.20f);
             var a = 2.234f;
 
-            var result1 = Vector4.Hermite(v1, t1, v2, t2, a);
+            var result1 = Vector4Extension.Hermite(v1, t1, v2, t2, a);
             var expected = new Vector4(39.0311f, 34.65557f, -132.5473f, -2626.85938f);
             Assert.That(expected, Is.EqualTo(result1).Using(Vector4Comparer.Epsilon));
 
@@ -97,7 +97,7 @@ namespace MonoGame.Tests.Framework
 
             // same as result1 ? - it must be same
 
-            Vector4.Hermite(ref v1, ref t1, ref v2, ref t2, a, out result2);
+            result2 = Vector4Extension.Hermite(v1, t1, v2, t2, a);
             Assert.That(result1, Is.EqualTo(result2).Using(Vector4Comparer.Epsilon));
         }
 
@@ -119,7 +119,7 @@ namespace MonoGame.Tests.Framework
         public void Normalize()
         {
             var vector1 = new Vector4(1, 2, 3, 4);
-            vector1.Normalize();
+            vector1 = Vector4.Normalize(vector1);
             var expected = new Vector4(0.1825742f,0.3651484f,0.5477225f,0.7302967f);
             Assert.That(expected, Is.EqualTo(vector1).Using(Vector4Comparer.Epsilon));
             var vector2 = new Vector4(1, 2, 3, 4);
@@ -130,7 +130,7 @@ namespace MonoGame.Tests.Framework
         [Test]
         public void ToStringTest()
         {
-            StringAssert.IsMatch("{X:10 Y:20 Z:3.5 W:-100}", new Vector4(10, 20, 3.5f, -100).ToString());
+            StringAssert.IsMatch("<10, 20, 3.5, -100>", new Vector4(10, 20, 3.5f, -100).ToString());
         }
 
         [Test]
@@ -175,21 +175,6 @@ namespace MonoGame.Tests.Framework
 
 #if !XNA
         [Test]
-        public void Deconstruct()
-        {
-            Vector4 vector4 = new Vector4(float.MinValue, float.MaxValue, float.MinValue, float.MaxValue);
-
-            float x, y, z, w;
-
-            vector4.Deconstruct(out x, out y, out z, out w);
-
-            Assert.AreEqual(x, vector4.X);
-            Assert.AreEqual(y, vector4.Y);
-            Assert.AreEqual(z, vector4.Z);
-            Assert.AreEqual(w, vector4.W);
-        }
-
-        [Test]
         public void Round()
         {
             Vector4 vector4 = new Vector4(0.0f, 0.4f, 0.6f, 1.0f);
@@ -200,10 +185,9 @@ namespace MonoGame.Tests.Framework
             ceilMember.Ceiling();
 
             Vector4 ceilResult;
-            Vector4.Ceiling(ref vector4, out ceilResult);
+            vector4.Ceiling(out ceilResult);
 
             Assert.AreEqual(new Vector4(0.0f, 1.0f, 1.0f, 1.0f), ceilMember);
-            Assert.AreEqual(new Vector4(0.0f, 1.0f, 1.0f, 1.0f), Vector4.Ceiling(vector4));
             Assert.AreEqual(new Vector4(0.0f, 1.0f, 1.0f, 1.0f), ceilResult);
 
             // FLOOR
@@ -212,10 +196,9 @@ namespace MonoGame.Tests.Framework
             floorMember.Floor();
 
             Vector4 floorResult;
-            Vector4.Floor(ref vector4, out floorResult);
+            vector4.Floor(out floorResult);
 
             Assert.AreEqual(new Vector4(0.0f, 0.0f, 0.0f, 1.0f), floorMember);
-            Assert.AreEqual(new Vector4(0.0f, 0.0f, 0.0f, 1.0f), Vector4.Floor(vector4));
             Assert.AreEqual(new Vector4(0.0f, 0.0f, 0.0f, 1.0f), floorResult);
 
             // ROUND
@@ -224,10 +207,9 @@ namespace MonoGame.Tests.Framework
             roundMember.Round();
 
             Vector4 roundResult;
-            Vector4.Round(ref vector4, out roundResult);
+            vector4.Round(out roundResult);
 
             Assert.AreEqual(new Vector4(0.0f, 0.0f, 1.0f, 1.0f), roundMember);
-            Assert.AreEqual(new Vector4(0.0f, 0.0f, 1.0f, 1.0f), Vector4.Round(vector4));
             Assert.AreEqual(new Vector4(0.0f, 0.0f, 1.0f, 1.0f), roundResult);
         }
 #endif

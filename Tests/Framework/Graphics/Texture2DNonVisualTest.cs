@@ -4,6 +4,7 @@
 
 using System;
 using System.IO;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

@@ -2,6 +2,8 @@
 // This file is subject to the terms and conditions defined in
 // file 'LICENSE.txt', which is part of this source code package.
 
+using System.Numerics;
+
 namespace Microsoft.Xna.Framework.Input
 {
     /// <summary>
@@ -100,7 +102,7 @@ namespace Microsoft.Xna.Framework.Input
             if (deadZoneMode == GamePadDeadZone.Circular)
             {
                 if (thumbstickPosition.LengthSquared() > 1f)
-                    thumbstickPosition.Normalize();
+                    thumbstickPosition = Vector2.Normalize(thumbstickPosition);
             }
             else
             {

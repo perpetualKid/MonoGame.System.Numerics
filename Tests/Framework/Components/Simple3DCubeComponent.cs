@@ -3,16 +3,18 @@
 // file 'LICENSE.txt', which is part of this source code package.
 
 using System;
+using System.Numerics;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MonoGame.Tests.Components {
-	class Simple3DCubeComponent
+namespace MonoGame.Tests.Components
+{
+    class Simple3DCubeComponent
 	{
 	    GraphicsDevice graphicsDevice;
 		BasicEffect basicEffect;
-		Matrix worldMatrix, viewMatrix, projectionMatrix;
+		Matrix4x4 worldMatrix, viewMatrix, projectionMatrix;
 
         public Vector3 CubePosition { get; set; }
 	    public Color CubeColor { get; set; }
@@ -25,12 +27,12 @@ namespace MonoGame.Tests.Components {
 		public void LoadContent ()
 		{
 			// setup our graphics scene matrices
-			worldMatrix = Matrix.Identity;
-			viewMatrix = Matrix.CreateLookAt (new Vector3 (0, 0, 5), Vector3.Zero, Vector3.Up);
-			projectionMatrix = Matrix.CreatePerspectiveFieldOfView (MathHelper.PiOver4, graphicsDevice.Viewport.AspectRatio, 1, 10);
+			worldMatrix = Matrix4x4.Identity;
+			viewMatrix = Matrix4x4.CreateLookAt (new Vector3 (0, 0, 5), Vector3.Zero, Vector3.UnitY);
+			projectionMatrix = Matrix4x4.CreatePerspectiveFieldOfView (MathHelper.PiOver4, graphicsDevice.Viewport.AspectRatio, 1, 10);
 
-			worldMatrix *= Matrix.CreateRotationX (-0.05f * 30f);
-			worldMatrix *= Matrix.CreateRotationY (-0.05f * 20f);
+			worldMatrix *= Matrix4x4.CreateRotationX (-0.05f * 30f);
+			worldMatrix *= Matrix4x4.CreateRotationY (-0.05f * 20f);
 
 			// Setup our basic effect
 			basicEffect = new BasicEffect (graphicsDevice);
@@ -59,13 +61,13 @@ namespace MonoGame.Tests.Components {
 			graphicsDevice.SetVertexBuffer (vertices);
 			graphicsDevice.Indices = indices;
 
-			basicEffect.World = worldMatrix * Matrix.CreateTranslation(CubePosition);
+			basicEffect.World = worldMatrix * Matrix4x4.CreateTranslation(CubePosition);
             basicEffect.DiffuseColor = CubeColor.ToVector3();
 
 			foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes) {
                 pass.Apply();
 
-				graphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, number_of_vertices, 0, number_of_indices / 3);
+				graphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, number_of_indices / 3);
 			}
 		}
 

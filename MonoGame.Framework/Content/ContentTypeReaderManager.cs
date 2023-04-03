@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using MonoGame.Framework.Utilities;
+using System.Numerics;
 
 namespace Microsoft.Xna.Framework.Content
 {
@@ -85,7 +86,7 @@ namespace Microsoft.Xna.Framework.Content
                 var hArrayFloatReader = new ArrayReader<float>();
                 var hArrayVector2Reader = new ArrayReader<Vector2>();
                 var hListVector2Reader = new ListReader<Vector2>();
-                var hArrayMatrixReader = new ArrayReader<Matrix>();
+                var hArrayMatrixReader = new ArrayReader<Matrix4x4>();
                 var hEnumBlendReader = new EnumReader<Graphics.Blend>();
                 var hNullableRectReader = new NullableReader<Rectangle>();
                 var hEffectMaterialReader = new EffectMaterialReader();
@@ -200,10 +201,10 @@ namespace Microsoft.Xna.Framework.Content
         /// Supports multiple generic types (e.g. Dictionary&lt;TKey,TValue&gt;) and nested generic types (e.g. List&lt;List&lt;int&gt;&gt;).
         /// </remarks> 
         /// <param name="type">
-        /// A <see cref="System.String"/>
+        /// A <see cref="string"/>
         /// </param>
         /// <returns>
-        /// A <see cref="System.String"/>
+        /// A <see cref="string"/>
         /// </returns>
         public static string PrepareType(string type)
         {
